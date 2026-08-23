@@ -67,28 +67,6 @@ export const SearchFilterBar: React.FC = () => {
           >
             All Marketplace
           </button>
-          <button
-            id="filter-sector-grocery"
-            onClick={() => setSelectedSector('grocery')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              selectedSector === 'grocery'
-                ? 'bg-emerald-800 text-white shadow-xs ring-1 ring-emerald-900'
-                : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200'
-            }`}
-          >
-            <span>🥦 Supermarket Groceries</span>
-          </button>
-          <button
-            id="filter-sector-food"
-            onClick={() => setSelectedSector('food')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              selectedSector === 'food'
-                ? 'bg-amber-600 text-white shadow-xs ring-1 ring-amber-700'
-                : 'bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200'
-            }`}
-          >
-            <span>🍕 Hot Food & Kitchens</span>
-          </button>
         </div>
 
       </div>

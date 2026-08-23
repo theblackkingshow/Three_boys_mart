@@ -159,11 +159,11 @@ export const CheckoutModal: React.FC = () => {
           deliveryFee,
           addressId: selectedAddressId,
           customAddress: {
-            street: fulfillmentType === 'pickup' ? '240 George Street' : street,
+            street: fulfillmentType === 'pickup' ? '100 St Georges Terrace' : street,
             unitNumber: fulfillmentType === 'pickup' ? undefined : activeAddress.unitNumber,
-            suburb: fulfillmentType === 'pickup' ? 'Sydney CBD' : suburb,
-            state: fulfillmentType === 'pickup' ? 'NSW' : state,
-            postcode: fulfillmentType === 'pickup' ? '2000' : postcode,
+            suburb: fulfillmentType === 'pickup' ? 'Perth CBD' : suburb,
+            state: fulfillmentType === 'pickup' ? 'WA' : state,
+            postcode: fulfillmentType === 'pickup' ? '6000' : postcode,
             deliveryInstructions: deliveryNotes || activeAddress.deliveryInstructions,
             lat: fulfillmentType === 'pickup' ? -33.865 : activeAddress.lat,
             lng: fulfillmentType === 'pickup' ? 151.205 : activeAddress.lng,
@@ -225,8 +225,8 @@ export const CheckoutModal: React.FC = () => {
 
             {fulfillmentType === 'pickup' ? (
               <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl">
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-950"><Building className="w-4 h-4" /> Three Boys Mart Sydney CBD</div>
-                <p className="text-xs text-amber-900 mt-1">240 George Street, Sydney NSW 2000</p>
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-950"><Building className="w-4 h-4" /> Three Boys Mart Perth CBD</div>
+                <p className="text-xs text-amber-900 mt-1">100 St Georges Terrace, Perth WA 6000</p>
                 <p className="text-[11px] text-amber-800 mt-1">Open daily, 8:00 AM - 8:00 PM. Pickup is free.</p>
               </div>
             ) : (

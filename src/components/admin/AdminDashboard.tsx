@@ -20,6 +20,7 @@ import {
   Plus,
   X,
   ImagePlus,
+  Trash2,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { GroceryCategory, OrderStatus, PaymentMethodType } from '../../types';
@@ -38,6 +39,7 @@ export const AdminDashboard: React.FC = () => {
     updateProductStock,
     updateProductBasePrice,
     updateProductImage,
+    deleteProduct,
     addNewProduct,
     showToast,
   } = useApp();
@@ -102,7 +104,7 @@ export const AdminDashboard: React.FC = () => {
       surplusThreshold: 35,
       dietary: [],
       origin: 'Australia',
-      brand: 'FreshMarket',
+      brand: 'Three Boys Mart',
       unit: 'each',
       image: newProductImage ? URL.createObjectURL(newProductImage) : '',
     }, newProductImage);
@@ -633,6 +635,7 @@ export const AdminDashboard: React.FC = () => {
                         <th className="pb-2.5">Stock</th>
                         <th className="pb-2.5">Current Price</th>
                         <th className="pb-2.5 text-right">Status</th>
+                        <th className="pb-2.5 text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-stone-100">
@@ -670,7 +673,7 @@ export const AdminDashboard: React.FC = () => {
                                 <input required value={newProductName} onChange={(event) => setNewProductName(event.target.value)} placeholder="Product name" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-sm" />
                                 <div className="grid grid-cols-2 gap-3">
                                   <select value={newProductCategory} onChange={(event) => setNewProductCategory(event.target.value as GroceryCategory)} className="bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-sm">
-                                    <option>Fresh Produce</option><option>Dairy & Eggs</option><option>Bakery & Bread</option><option>Meat & Seafood</option><option>Pantry & Staples</option><option>Beverages & Juices</option>
+                                    <option>Fresh Produce</option><option>Personal Care</option><option>Men's Fashion</option><option>Women's Fashion</option><option>Kids' Fashion</option>
                                   </select>
                                   <input type="number" min="0" step="0.01" value={newProductPrice} onChange={(event) => setNewProductPrice(Number(event.target.value))} aria-label="Base price" className="bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-sm" />
                                 </div>
@@ -723,6 +726,21 @@ export const AdminDashboard: React.FC = () => {
                             <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${product.stock <= 0 ? 'bg-rose-100 text-rose-700' : product.stock > 35 ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-100 text-stone-600'}`}>
                               {product.stock <= 0 ? 'Out of stock' : product.stock > 35 ? 'Surplus' : 'In stock'}
                             </span>
+                          </td>
+                          <td className="py-3 text-right">
+                            <button
+                              type="button"
+                              aria-label={`Delete ${product.name}`}
+                              title="Delete product"
+                              onClick={() => {
+                                if (window.confirm(`Delete ${product.name} from the catalog?`)) {
+                                  void deleteProduct(product.id);
+                                }
+                              }}
+                              className="inline-flex items-center justify-center p-2 rounded-lg text-rose-600 hover:bg-rose-50 hover:text-rose-800"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
                           </td>
                         </tr>
                       ))}

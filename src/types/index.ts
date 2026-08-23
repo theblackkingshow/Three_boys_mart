@@ -1,6 +1,6 @@
 export type UserRole = 'customer' | 'driver' | 'vendor' | 'admin';
 
-export type StoreSector = 'all' | 'grocery' | 'food';
+export type StoreSector = 'all' | 'grocery' | 'food' | 'lifestyle';
 
 export type GroceryCategory =
   | 'Fresh Produce'
@@ -20,7 +20,8 @@ export type GroceryCategory =
   | 'Organic & Specialty'
   | 'Men\'s Fashion'
   | 'Women\'s Fashion'
-  | 'Kids\' Fashion';
+  | 'Kids\' Fashion'
+  | 'Hair & Beauty';
 
 export type DietaryTag =
   | 'Organic'
@@ -32,7 +33,8 @@ export type DietaryTag =
   | 'Australian Grown'
   | 'Sugar-Free';
 
-export type MarketplaceTag = 'fashion' | 'groceries' | 'beauty' | 'crafts';
+export type MarketplaceTag = 'fashion' | 'groceries' | 'beauty' | 'hair' | 'crafts';
+export type MarketplaceDepartment = 'all' | 'groceries' | 'fashion' | 'hair_beauty';
 
 export interface Vendor {
   id: string;

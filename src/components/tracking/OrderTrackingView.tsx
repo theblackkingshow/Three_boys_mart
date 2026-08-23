@@ -233,7 +233,7 @@ export const OrderTrackingView: React.FC = () => {
                 </text>
                 <rect x="-60" y="-38" width="120" height="20" rx="6" fill="#064e3b" />
                 <text x="0" y="-24" fill="#6ee7b7" fontSize="9" fontWeight="bold" textAnchor="middle">
-                  Metro Supermarket
+                  Three Boys Market
                 </text>
               </g>
 

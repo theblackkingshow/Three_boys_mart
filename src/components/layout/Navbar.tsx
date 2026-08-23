@@ -529,29 +529,6 @@ export const Navbar: React.FC = () => {
               </div>
             </button>
 
-            {/* Delivery Address Pill (Desktop) */}
-            <div className="hidden lg:flex items-center gap-2 pl-4 border-l border-stone-200">
-              <div className="p-1.5 rounded-lg bg-stone-100 text-stone-600">
-                <MapPin className="w-4 h-4 text-emerald-600" />
-              </div>
-              <div className="text-left">
-                <div className="text-[11px] text-stone-400 font-medium leading-none">
-                  Deliver to {activeAddress?.label || 'Home'}
-                </div>
-                <button
-                  id="btn-change-address"
-                  onClick={() => setActiveTab('user_profile')}
-                  className="text-xs font-semibold text-stone-800 hover:text-emerald-700 flex items-center gap-1 transition-colors cursor-pointer"
-                >
-                  <span className="truncate max-w-[140px]">
-                    {activeAddress
-                      ? `${activeAddress.suburb}, ${activeAddress.state}`
-                      : 'Sydney CBD, NSW'}
-                  </span>
-                  <ChevronDown className="w-3 h-3 text-stone-400" />
-                </button>
-              </div>
-            </div>
           </div>
 
           {/* Search Bar (Customer Food & Grocery) */}

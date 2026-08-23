@@ -89,12 +89,6 @@ export const ProductModal: React.FC = () => {
           {/* Details Column */}
           <div className="p-6 flex flex-col justify-between">
             <div>
-              {/* Store header */}
-              <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg w-fit mb-3">
-                <Store className="w-3.5 h-3.5 text-emerald-700" />
-                <span>{product.vendorName}</span>
-              </div>
-
               {/* Title */}
               <h2 className="text-lg md:text-xl font-bold text-stone-900 leading-snug mb-1">
                 {product.name}
@@ -108,8 +102,6 @@ export const ProductModal: React.FC = () => {
                     <span>{product.unitPriceComparison}</span>
                   </>
                 )}
-                <span>•</span>
-                <span className="font-semibold text-stone-700">{product.origin}</span>
               </div>
 
               {/* Price & dynamic breakdown */}

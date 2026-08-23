@@ -119,6 +119,13 @@ export const GROCERY_CATEGORIES: {
     description: 'Comfortable, playful pieces made for growing days and big adventures.',
     image: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=600&auto=format&fit=crop&q=80',
   },
+  {
+    name: 'Hair & Beauty',
+    icon: 'Heart',
+    description: 'Hair care, skin rituals and beauty essentials for every routine.',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=80',
+    badge: 'Care Edit',
+  },
 ];
 
 export const INITIAL_VENDORS: Vendor[] = [
@@ -278,7 +285,7 @@ export const INITIAL_VENDORS: Vendor[] = [
   },
   {
     id: 'vendor-5',
-    name: 'Sunrise Bakery & Pantry Co.',
+    name: 'Three Boys Market',
     type: 'Bakery',
     sector: 'hybrid',
     rating: 4.9,
@@ -300,7 +307,7 @@ export const INITIAL_VENDORS: Vendor[] = [
   },
   {
     id: 'vendor-6',
-    name: 'Colesworth Express Hub',
+    name: 'Three Boys Market',
     type: 'Express Mart',
     sector: 'grocery',
     rating: 4.6,
@@ -381,7 +388,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     surplusThreshold: 35,
     dietary: ['Organic', 'Vegan', 'Gluten-Free', 'Australian Grown'],
     origin: 'Sydney Basin Organic Farm',
-    brand: 'Harvest Green',
+    brand: 'Three Boys Mart',
     nutrition: { calories: '23 kcal/100g', protein: '2.9g', fat: '0.4g', carbs: '3.6g' },
   },
   {
@@ -401,7 +408,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     surplusThreshold: 35,
     dietary: ['Organic', 'Vegan', 'Australian Grown'],
     origin: 'Bowral NSW',
-    brand: 'Harvest Green',
+    brand: 'Three Boys Mart',
   },
   {
     id: 'prod-5',
@@ -507,7 +514,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-10',
     vendorId: 'vendor-5',
-    vendorName: 'Sunrise Bakery & Pantry Co.',
+    vendorName: 'Three Boys Market',
     name: 'Woodfired San Francisco Sourdough Loaf',
     category: 'Bakery & Bread',
     description: '36-hour fermented wild levain sourdough with a blistered crunchy crust and airy crumb.',
@@ -521,12 +528,12 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     surplusThreshold: 35,
     dietary: ['Vegan', 'Vegetarian'],
     origin: 'Baked in Newtown Sydney',
-    brand: 'Sunrise Bakery',
+    brand: 'Three Boys Mart',
   },
   {
     id: 'prod-11',
     vendorId: 'vendor-5',
-    vendorName: 'Sunrise Bakery & Pantry Co.',
+    vendorName: 'Three Boys Market',
     name: 'French Butter Croissants (Pack of 4)',
     category: 'Bakery & Bread',
     description: 'Layered with authentic cultured French butter for featherlight golden flakiness.',
@@ -540,7 +547,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     surplusThreshold: 35,
     dietary: ['Vegetarian'],
     origin: 'Handmade Daily',
-    brand: 'Sunrise Bakery',
+    brand: 'Three Boys Mart',
   },
   {
     id: 'prod-12',
@@ -876,7 +883,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     surplusThreshold: 35,
     dietary: ['Gluten-Free', 'Halal'],
     origin: 'Cooked in-store fresh',
-    brand: 'Metro Deli Fresh',
+    brand: 'Three Boys Mart',
   },
 
   // Household & Cleaning
@@ -902,7 +909,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-30',
     vendorId: 'vendor-6',
-    vendorName: 'Colesworth Express Hub',
+    vendorName: 'Three Boys Market',
     name: '100% Recycled 3-Ply Paper Towels (4 Mega Rolls)',
     category: 'Household & Cleaning',
     description: 'Ultra absorbent textured weave made from post-consumer recycled Australian paper.',
@@ -915,7 +922,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     lowStockThreshold: 6,
     surplusThreshold: 35,
     dietary: [],
-    origin: 'Melbourne VIC',
+    origin: 'Perth, WA',
     brand: 'Who Gives A Crap',
   },
 
@@ -926,6 +933,8 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     vendorName: 'Three Boys Market',
     name: 'Zinc Mineral Invisible Sunscreen SPF 50+ (Water Resistant 4h)',
     category: 'Personal Care',
+    itemType: 'lifestyle',
+    categoryTags: ['beauty'],
     description: 'Reef-friendly broad spectrum UV protection with vitamin E and aloe vera. Non-greasy finish.',
     basePrice: 19.5,
     unit: '150ml tube',
@@ -936,15 +945,17 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     lowStockThreshold: 6,
     surplusThreshold: 35,
     dietary: ['Vegan', 'Australian Grown'],
-    origin: 'Bondi Sands NSW',
+    origin: 'Perth, WA',
     brand: 'Aussie Sun Guard',
   },
   {
     id: 'prod-32',
     vendorId: 'vendor-6',
-    vendorName: 'Colesworth Express Hub',
+    vendorName: 'Three Boys Market',
     name: 'Botanical Native Myrtle & Eucalyptus Body Wash',
     category: 'Personal Care',
+    itemType: 'lifestyle',
+    categoryTags: ['beauty'],
     description: 'Infused with wild Tasmanian pepperberry and lemon myrtle essential oils to revitalise skin.',
     basePrice: 11.0,
     unit: '500ml bottle',
@@ -955,7 +966,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     lowStockThreshold: 6,
     surplusThreshold: 35,
     dietary: ['Vegan'],
-    origin: 'Melbourne VIC',
+    origin: 'Perth, WA',
     brand: 'Grown Botanicals',
   },
   // Hot Meals & Kitchen Dishes
@@ -1107,7 +1118,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-food-8',
     vendorId: 'vendor-5',
-    vendorName: 'Sunrise Bakery & Pantry Co.',
+    vendorName: 'Three Boys Market',
     name: 'Smoked Ham, Swiss Gruyère & Dijon Sourdough Toastie',
     category: 'Hot Meals & Kitchen',
     itemType: 'food',
@@ -1122,7 +1133,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     surplusThreshold: 25,
     dietary: [],
     origin: 'Newtown NSW',
-    brand: 'Sunrise Kitchen',
+    brand: 'Three Boys Mart',
   },
 ];
 
@@ -1133,42 +1144,67 @@ RAW_PRODUCTS.push(
     name: 'Relaxed Kente Panel Shirt', category: 'Men\'s Fashion', itemType: 'lifestyle',
     description: 'A relaxed cotton shirt finished with a bold woven panel for everyday statement dressing.', basePrice: 58,
     unit: '1 shirt', image: 'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=500&auto=format&fit=crop&q=80', stock: 14, initialStock: 20,
-    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Victoria', brand: 'Three Boys Edit', categoryTags: ['fashion'],
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Perth, WA', brand: 'Three Boys Edit', categoryTags: ['fashion'],
   },
   {
-    id: 'prod-fashion-men-2', vendorId: 'vendor-5', vendorName: 'Sunrise Bakery & Pantry Co.',
+    id: 'prod-fashion-men-2', vendorId: 'vendor-5', vendorName: 'Three Boys Market',
     name: 'Textured Linen Overshirt', category: 'Men\'s Fashion', itemType: 'lifestyle',
     description: 'A breathable linen layer in a versatile neutral tone, cut for easy weekend wear.', basePrice: 72,
     unit: '1 overshirt', image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=500&auto=format&fit=crop&q=80', stock: 9, initialStock: 15,
-    lowStockThreshold: 3, surplusThreshold: 35, dietary: [], origin: 'New South Wales', brand: 'Common Thread', categoryTags: ['fashion'],
+    lowStockThreshold: 3, surplusThreshold: 35, dietary: [], origin: 'Perth, WA', brand: 'Common Thread', categoryTags: ['fashion'],
   },
   {
     id: 'prod-fashion-women-1', vendorId: 'vendor-2', vendorName: 'Three Boys Market',
     name: 'Printed Wrap Midi Dress', category: 'Women\'s Fashion', itemType: 'lifestyle',
     description: 'A fluid wrap silhouette with an expressive print for warm afternoons and special plans.', basePrice: 86,
     unit: '1 dress', image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500&auto=format&fit=crop&q=80', stock: 11, initialStock: 18,
-    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Queensland', brand: 'Mara Studio', categoryTags: ['fashion'],
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Perth, WA', brand: 'Mara Studio', categoryTags: ['fashion'],
   },
   {
-    id: 'prod-fashion-women-2', vendorId: 'vendor-6', vendorName: 'Colesworth Express Hub',
+    id: 'prod-fashion-women-2', vendorId: 'vendor-6', vendorName: 'Three Boys Market',
     name: 'Handwoven Raffia Market Bag', category: 'Women\'s Fashion', itemType: 'lifestyle',
     description: 'A roomy handwoven carryall for market mornings, beach days and city errands.', basePrice: 44,
     unit: '1 bag', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=500&auto=format&fit=crop&q=80', stock: 22, initialStock: 30,
-    lowStockThreshold: 5, surplusThreshold: 35, dietary: [], origin: 'South Australia', brand: 'Made Well', categoryTags: ['fashion', 'crafts'],
+    lowStockThreshold: 5, surplusThreshold: 35, dietary: [], origin: 'Perth, WA', brand: 'Made Well', categoryTags: ['fashion', 'crafts'],
   },
   {
-    id: 'prod-fashion-kids-1', vendorId: 'vendor-5', vendorName: 'Sunrise Bakery & Pantry Co.',
+    id: 'prod-fashion-kids-1', vendorId: 'vendor-5', vendorName: 'Three Boys Market',
     name: 'Colourblock Cotton Play Set', category: 'Kids\' Fashion', itemType: 'lifestyle',
     description: 'Soft, durable cotton separates made for playground afternoons and curious little explorers.', basePrice: 38,
     unit: '2-piece set', image: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=500&auto=format&fit=crop&q=80', stock: 17, initialStock: 25,
-    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Victoria', brand: 'Little Day', categoryTags: ['fashion'],
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Perth, WA', brand: 'Little Day', categoryTags: ['fashion'],
   },
   {
-    id: 'prod-fashion-kids-2', vendorId: 'vendor-6', vendorName: 'Colesworth Express Hub',
+    id: 'prod-fashion-kids-2', vendorId: 'vendor-6', vendorName: 'Three Boys Market',
     name: 'Mini Canvas Weekend Sneakers', category: 'Kids\' Fashion', itemType: 'lifestyle',
     description: 'Lightweight canvas sneakers with flexible soles for busy little feet.', basePrice: 32,
     unit: '1 pair', image: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=500&auto=format&fit=crop&q=80', stock: 13, initialStock: 20,
-    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'New South Wales', brand: 'Bright Steps', categoryTags: ['fashion'],
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Perth, WA', brand: 'Bright Steps', categoryTags: ['fashion'],
+  },
+);
+
+// Hair and beauty marketplace products
+RAW_PRODUCTS.push(
+  {
+    id: 'prod-hair-1', vendorId: 'vendor-2', vendorName: 'Three Boys Market',
+    name: 'Nourishing Shea & Coconut Hair Butter', category: 'Hair & Beauty', itemType: 'lifestyle',
+    description: 'A rich leave-in treatment for soft, moisturised curls, coils and protective styles.', basePrice: 22,
+    unit: '250ml jar', image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=500&auto=format&fit=crop&q=80', stock: 19, initialStock: 25,
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: ['Vegan'], origin: 'Western Australia', brand: 'Crown & Coil', categoryTags: ['hair', 'beauty'],
+  },
+  {
+    id: 'prod-hair-2', vendorId: 'vendor-6', vendorName: 'Three Boys Market',
+    name: 'Satin Edge Scarf & Bonnet Set', category: 'Hair & Beauty', itemType: 'lifestyle',
+    description: 'A smooth satin set designed to help protect hair overnight and keep styles fresh.', basePrice: 28,
+    unit: '2-piece set', image: 'https://images.unsplash.com/photo-1585232351009-aa87416fca90?w=500&auto=format&fit=crop&q=80', stock: 12, initialStock: 18,
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Perth, WA', brand: 'Night Ritual', categoryTags: ['hair'],
+  },
+  {
+    id: 'prod-hair-3', vendorId: 'vendor-2', vendorName: 'Three Boys Market',
+    name: 'Glow Ritual Body Oil', category: 'Hair & Beauty', itemType: 'lifestyle',
+    description: 'A lightweight botanical body oil with a warm glow and a soft, fresh finish.', basePrice: 24,
+    unit: '100ml bottle', image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&auto=format&fit=crop&q=80', stock: 16, initialStock: 22,
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: ['Vegan'], origin: 'Western Australia', brand: 'Glow House', categoryTags: ['beauty'],
   },
 );
 
@@ -1232,7 +1268,7 @@ export const INITIAL_DRIVERS: DeliveryDriver[] = [
 export const INITIAL_USER: UserProfile = {
   id: 'usr-8821',
   name: 'Alexandria Morgan',
-  email: 'alex.morgan@sydney.com.au',
+  email: 'alex.morgan@perth.com.au',
   phone: '+61 411 234 567',
   avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
   loyaltyPoints: 340,
@@ -1240,11 +1276,11 @@ export const INITIAL_USER: UserProfile = {
     {
       id: 'addr-1',
       label: 'Home',
-      street: '72 Campbell Street',
+      street: '18 Wellington Street',
       unitNumber: 'Apartment 4B',
-      suburb: 'Surry Hills',
-      state: 'NSW',
-      postcode: '2010',
+      suburb: 'Perth CBD',
+      state: 'WA',
+      postcode: '6000',
       deliveryInstructions: 'Ring buzzer 402 or leave in parcel lockers at main foyer.',
       isDefault: true,
       lat: -33.8824,
@@ -1301,7 +1337,7 @@ export const INITIAL_ORDERS: Order[] = [
       lng: 151.2118,
     },
     vendorIds: ['vendor-1', 'vendor-5'],
-    vendorNames: ['Three Boys Market', 'Sunrise Bakery & Pantry Co.'],
+    vendorNames: ['Three Boys Market'],
     items: [
       {
         productId: 'prod-1',
@@ -1321,7 +1357,7 @@ export const INITIAL_ORDERS: Order[] = [
         productId: 'prod-10',
         productName: 'Woodfired San Francisco Sourdough Loaf',
         vendorId: 'vendor-5',
-        vendorName: 'Sunrise Bakery & Pantry Co.',
+        vendorName: 'Three Boys Market',
         category: 'Bakery & Bread',
         quantity: 1,
         unitPrice: 8.1, // Dynamic scarcity price
@@ -1380,7 +1416,7 @@ export const INITIAL_ORDERS: Order[] = [
         label: 'Stores Accepted Order',
         timestamp: '14:18',
         completed: true,
-        notes: 'Metro Supermarket & Sunrise Bakery acknowledged order.',
+        notes: 'Three Boys Market acknowledged order.',
       },
       {
         status: 'packing_items',
@@ -1394,7 +1430,7 @@ export const INITIAL_ORDERS: Order[] = [
         label: 'Driver Assigned (Marcus Vance)',
         timestamp: '14:27',
         completed: true,
-        notes: 'Marcus collected package from Metro Supermarket dispatch bay.',
+        notes: 'Marcus collected package from Three Boys Market dispatch bay.',
       },
       {
         status: 'out_for_delivery',

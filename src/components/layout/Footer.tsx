@@ -74,29 +74,16 @@ export const Footer: React.FC = () => {
             <p className="text-xs text-stone-400 leading-relaxed max-w-sm">
               A considered Australian marketplace for food, style, beauty, home, gifts and everyday discoveries, delivered to your doorstep.
             </p>
-            <div className="flex flex-wrap gap-2 pt-2">
-              <span className="text-[11px] bg-stone-800 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700">
-                🇦🇺 Sydney, NSW
-              </span>
-              <span className="text-[11px] bg-stone-800 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700">
-                🇦🇺 Melbourne, VIC
-              </span>
-              <span className="text-[11px] bg-stone-800 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700">
-                🇦🇺 Brisbane, QLD
-              </span>
-            </div>
           </div>
 
           {/* Marketplace Departments */}
           <div>
-            <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">Popular Departments</h5>
+            <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">Shop Departments</h5>
             <ul className="space-y-2 text-xs text-stone-400">
-              <li className="hover:text-emerald-400 transition-colors">Fresh Produce & Herbs</li>
-              <li className="hover:text-emerald-400 transition-colors">Pantry, Bakery & Kitchen</li>
-              <li className="hover:text-emerald-400 transition-colors">Fashion & Personal Care</li>
-              <li className="hover:text-emerald-400 transition-colors">Home, Gifts & Crafts</li>
-              <li className="hover:text-emerald-400 transition-colors">Games & Creative Play</li>
-              <li className="hover:text-emerald-400 transition-colors">Local Seller Collections</li>
+              <li className="hover:text-emerald-400 transition-colors">Groceries</li>
+              <li className="hover:text-emerald-400 transition-colors">Men's, Women's & Kids' Fashion</li>
+              <li className="hover:text-emerald-400 transition-colors">Hair & Beauty Essentials</li>
+              <li className="hover:text-emerald-400 transition-colors">Perth Seller Collections</li>
             </ul>
           </div>
 

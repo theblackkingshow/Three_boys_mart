@@ -6,7 +6,6 @@ import {
   TrendingDown,
   AlertCircle,
   Check,
-  Store,
   Info,
   ShieldCheck,
 } from 'lucide-react';
@@ -67,12 +66,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             loading="lazy"
           />
 
-          {/* Vendor chip */}
-          <div className="product-vendor-chip absolute bottom-2 left-2 bg-stone-900/80 backdrop-blur-xs text-white text-[10px] font-medium px-2 py-0.5 rounded-md flex items-center gap-1 max-w-[85%] truncate">
-            <Store className="w-2.5 h-2.5 shrink-0 text-emerald-400" />
-            <span className="truncate">{product.vendorName}</span>
-          </div>
-
           {/* Out of stock overlay */}
           {isOutOfStock && (
             <div className="absolute inset-0 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center text-white text-xs font-bold uppercase tracking-wider">
@@ -91,11 +84,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {d}
             </span>
           ))}
-          {product.origin && (
-            <span className="text-[9px] font-medium text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded truncate max-w-[120px]">
-              {product.origin}
-            </span>
-          )}
         </div>
 
         {/* Title */}

@@ -56,3 +56,9 @@ export const updateProductRecord = async (productId: string, changes: Partial<Pr
   if (!response.ok) throw new Error(`Product update failed (${response.status})`);
   return response.json();
 };
+
+export const deleteProductRecord = async (productId: string): Promise<void> => {
+  if (!apiBaseUrl) return;
+  const response = await fetch(`${apiBaseUrl}/api/products/${productId}`, { method: 'DELETE' });
+  if (!response.ok) throw new Error(`Product deletion failed (${response.status})`);
+};

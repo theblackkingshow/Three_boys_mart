@@ -101,6 +101,19 @@ app.patch('/api/products/:id', async (req, res) => {
   }
 });
 
+app.delete('/api/products/:id', async (req, res) => {
+  if (!supabaseUrl || !supabaseServiceRoleKey) return res.status(503).json({ error: 'Catalog database is not configured' });
+  try {
+    const response = await fetch(`${supabaseUrl}/rest/v1/products?id=eq.${encodeURIComponent(req.params.id)}`, {
+      method: 'DELETE',
+      headers: { ...supabaseHeaders(), Prefer: 'return=minimal' },
+    });
+    res.sendStatus(response.status);
+  } catch (error) {
+    res.status(502).json({ error: error instanceof Error ? error.message : 'Product deletion failed' });
+  }
+});
+
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/health', (_req, res) => {

@@ -44,26 +44,30 @@ const iconMap: Record<string, React.ReactNode> = {
 export const CategoryList: React.FC = () => {
   const { selectedCategory, setSelectedCategory, selectedSector, setSelectedSector } = useApp();
 
-  const displayedCategories = GROCERY_CATEGORIES.filter((cat) => {
-    if (selectedSector === 'grocery') {
-      return (
-        cat.name !== 'Hot Meals & Kitchen' &&
-        cat.name !== 'Sushi & Asian Bowls' &&
-        cat.name !== 'Artisan Pizza & Pasta'
-      );
+  const excludedCategories = new Set([
+    'Fresh Produce',
+    'Dairy & Eggs', 'Bakery & Bread', 'Meat & Seafood', 'Deli & Prepared',
+    'Pantry & Staples', 'Beverages & Juices', 'Snacks & Treats', 'Frozen Foods',
+    'Household & Cleaning', 'Organic & Specialty', 'Hot Meals & Kitchen',
+    'Sushi & Asian Bowls', 'Artisan Pizza & Pasta',
+  ]);
+  const displayedCategories = GROCERY_CATEGORIES.filter((cat) => !excludedCategories.has(cat.name) && selectedSector !== 'grocery');
+
+  const chooseDepartment = (department: 'all' | 'groceries' | 'fashion' | 'hair_beauty') => {
+    if (department === 'all') {
+      setSelectedSector('all');
+      setSelectedCategory('All');
+    } else if (department === 'groceries') {
+      setSelectedSector('grocery');
+      setSelectedCategory('Fresh Produce');
+    } else if (department === 'fashion') {
+      setSelectedSector('lifestyle');
+      setSelectedCategory('All');
+    } else {
+      setSelectedSector('lifestyle');
+      setSelectedCategory('Hair & Beauty');
     }
-    if (selectedSector === 'food') {
-      return (
-        cat.name === 'Hot Meals & Kitchen' ||
-        cat.name === 'Sushi & Asian Bowls' ||
-        cat.name === 'Artisan Pizza & Pasta' ||
-        cat.name === 'Bakery & Bread' ||
-        cat.name === 'Deli & Prepared' ||
-        cat.name === 'Beverages & Juices'
-      );
-    }
-    return true;
-  });
+  };
 
   return (
     <div className="category-strip">
@@ -71,11 +75,11 @@ export const CategoryList: React.FC = () => {
         <div className="flex items-center gap-2">
           <h3>
             <span>
-              {selectedSector === 'food'
-                ? '🍕 Hot Food Kitchens, Delis & Fresh Meals'
-                : selectedSector === 'grocery'
-                ? '🥦 Fresh Supermarket Aisles & Produce'
-                : '🛒 Browse the Marketplace'}
+              {selectedSector === 'grocery'
+                ? 'Groceries'
+                : selectedSector === 'lifestyle'
+                ? 'Fashion & Hair Beauty'
+                : 'Three Boys Mart departments'}
             </span>
           </h3>
           {selectedSector !== 'all' && (
@@ -100,10 +104,10 @@ export const CategoryList: React.FC = () => {
 
       {/* Horizontal scrolling pill carousel */}
       <div className="category-scroll">
-        {/* 'All' button */}
+        {/* Marketplace departments */}
         <button
           id="btn-category-all"
-          onClick={() => setSelectedCategory('All')}
+          onClick={() => chooseDepartment('all')}
           className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer ${
             selectedCategory === 'All'
               ? 'bg-stone-900 text-white shadow-sm'
@@ -111,38 +115,11 @@ export const CategoryList: React.FC = () => {
           }`}
         >
           <Layers className="w-3.5 h-3.5" />
-          <span>All {selectedSector === 'food' ? 'Meals' : selectedSector === 'grocery' ? 'Groceries' : 'Items'}</span>
+          <span>All items</span>
         </button>
-
-        {displayedCategories.map((cat) => {
-          const isSelected = selectedCategory === cat.name;
-          return (
-            <button
-              key={cat.name}
-              id={`btn-category-${cat.name.replace(/\s+/g, '-').toLowerCase()}`}
-              onClick={() => setSelectedCategory(cat.name)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer ${
-                isSelected
-                  ? 'bg-emerald-700 text-white shadow-sm ring-1 ring-emerald-800'
-                  : 'bg-white text-stone-700 border border-stone-200 hover:border-emerald-300 hover:bg-emerald-50/50'
-              }`}
-            >
-              <span className={isSelected ? 'text-emerald-200' : 'text-emerald-600'}>
-                {iconMap[cat.icon] || <Apple className="w-3.5 h-3.5" />}
-              </span>
-              <span>{cat.name}</span>
-              {cat.badge && (
-                <span
-                  className={`text-[9px] px-1.5 py-0.2 rounded font-black tracking-tight ${
-                    isSelected ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'
-                  }`}
-                >
-                  {cat.badge}
-                </span>
-              )}
-            </button>
-          );
-        })}
+        <button id="btn-category-groceries" onClick={() => chooseDepartment('groceries')} className="department-button"><Apple className="w-4 h-4" /> Groceries</button>
+        <button id="btn-category-fashion" onClick={() => chooseDepartment('fashion')} className="department-button"><Shirt className="w-4 h-4" /> Fashion</button>
+        <button id="btn-category-hair-beauty" onClick={() => chooseDepartment('hair_beauty')} className="department-button"><Heart className="w-4 h-4" /> Hair &amp; Beauty</button>
       </div>
     </div>
   );

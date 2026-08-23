@@ -28,7 +28,7 @@ import {
   updateProductDynamicPrices,
   calculateDynamicPrice,
 } from '../services/dynamicPricing';
-import { loadCatalogProducts, uploadProductAndInsert, uploadProductImage, updateProductRecord } from '../services/catalogApi';
+import { loadCatalogProducts, uploadProductAndInsert, uploadProductImage, updateProductRecord, deleteProductRecord } from '../services/catalogApi';
 import { submitOrderToBackend } from '../services/shippingApi';
 
 interface AppContextType {
@@ -53,6 +53,7 @@ interface AppContextType {
   updateProductStock: (productId: string, newStock: number) => void;
   updateProductBasePrice: (productId: string, newBasePrice: number) => void;
   updateProductImage: (productId: string, imageFile: File) => Promise<void>;
+  deleteProduct: (productId: string) => Promise<void>;
   addNewProduct: (product: Omit<Product, 'id' | 'currentPrice'>, imageFile?: File) => Promise<void>;
 
   // Search & Filtering
@@ -167,7 +168,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setUserProfile((prev) => ({
         ...prev,
         name: customDetails?.name || 'Alexander Hayes',
-        email: customDetails?.email || 'admin@freshmarket.com.au',
+        email: customDetails?.email || 'admin@threeboysmart.com.au',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       }));
       setActiveTab('admin_dashboard');
@@ -176,7 +177,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setUserProfile((prev) => ({
         ...prev,
         name: customDetails?.name || 'Marcus Vance',
-        email: customDetails?.email || 'driver.marcus@freshmarket.com.au',
+        email: customDetails?.email || 'driver.marcus@threeboysmart.com.au',
         avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
       }));
       setActiveTab('driver_portal');
@@ -185,7 +186,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setUserProfile((prev) => ({
         ...prev,
         name: customDetails?.name || 'Elena Rostova',
-        email: customDetails?.email || 'manager@metro-supermarket.com.au',
+        email: customDetails?.email || 'manager@threeboysmart.com.au',
         avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
       }));
       setActiveTab('vendor_portal');
@@ -211,7 +212,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   // Data
   const [vendors] = useState<Vendor[]>(INITIAL_VENDORS);
   const [pricingConfig, setPricingConfig] = useState<DynamicPricingConfig>(DEFAULT_PRICING_CONFIG);
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS.filter((product) => product.itemType === 'lifestyle' || (product.itemType === 'grocery' && product.vendorName === 'Three Boys Market')));
   const [drivers, setDrivers] = useState<DeliveryDriver[]>(INITIAL_DRIVERS);
   const [activeDriverId, setActiveDriverId] = useState<string>('driver-1');
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
@@ -234,7 +235,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     loadCatalogProducts()
       .then((remoteProducts) => {
-        if (remoteProducts?.length) setProducts(updateProductDynamicPrices(remoteProducts, pricingConfig));
+        if (remoteProducts?.length) setProducts(updateProductDynamicPrices(remoteProducts.filter((product) => product.itemType === 'lifestyle' || (product.itemType === 'grocery' && product.vendorName === 'Three Boys Market')), pricingConfig));
       })
       .catch(() => showToast('Using local catalog while the database is unavailable', 'warning'));
   }, []);
@@ -301,6 +302,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
+  const deleteProduct = async (productId: string) => {
+    const product = products.find((item) => item.id === productId);
+    if (!product) return;
+    try {
+      await deleteProductRecord(productId);
+      setProducts((prev) => prev.filter((item) => item.id !== productId));
+      showToast(`${product.name} deleted from catalog`, 'success');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Product could not be deleted', 'warning');
+    }
+  };
+
   const addNewProduct = async (rawProduct: Omit<Product, 'id' | 'currentPrice'>, imageFile?: File) => {
     const calc = calculateDynamicPrice(rawProduct.basePrice, rawProduct.stock, pricingConfig);
     const newProd: Product = {
@@ -363,8 +376,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   );
 
   const filteredProducts = useMemo(() => {
+    const excludedCategories = new Set([
+      'Dairy & Eggs', 'Bakery & Bread', 'Meat & Seafood', 'Deli & Prepared',
+      'Pantry & Staples', 'Beverages & Juices', 'Snacks & Treats', 'Frozen Foods',
+      'Household & Cleaning', 'Organic & Specialty', 'Hot Meals & Kitchen',
+      'Sushi & Asian Bowls', 'Artisan Pizza & Pasta',
+    ]);
     return products
       .filter((p) => {
+        if (excludedCategories.has(p.category)) return false;
         // Sector filter (All / Grocery supermarket items / Prepared hot food & meals)
         if (selectedSector === 'grocery' && p.itemType !== 'grocery') return false;
         if (selectedSector === 'food' && p.itemType !== 'food') return false;
@@ -833,6 +853,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         updateProductStock,
         updateProductBasePrice,
         updateProductImage,
+        deleteProduct,
         addNewProduct,
         selectedSector,
         setSelectedSector,

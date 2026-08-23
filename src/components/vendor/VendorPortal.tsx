@@ -402,11 +402,10 @@ export const VendorPortal: React.FC = () => {
                     className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 focus:outline-none"
                   >
                     <option value="Fresh Produce">Fresh Produce</option>
-                    <option value="Dairy & Eggs">Dairy & Eggs</option>
-                    <option value="Bakery & Bread">Bakery & Bread</option>
-                    <option value="Meat & Seafood">Meat & Seafood</option>
-                    <option value="Pantry & Staples">Pantry & Staples</option>
-                    <option value="Beverages & Juices">Beverages & Juices</option>
+                    <option value="Personal Care">Personal Care</option>
+                    <option value="Men's Fashion">Men's Fashion</option>
+                    <option value="Women's Fashion">Women's Fashion</option>
+                    <option value="Kids' Fashion">Kids' Fashion</option>
                   </select>
                 </div>
                 <div>

@@ -21,7 +21,7 @@ export const DEMO_ACCOUNTS = [
     role: 'admin' as UserRole,
     name: 'Alexander Hayes',
     title: 'Chief Operations Administrator',
-    email: 'admin@freshmarket.com.au',
+    email: 'admin@threeboysmart.com.au',
     badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
     headerColor: 'from-purple-900 to-indigo-900',
     iconBg: 'bg-purple-600',
@@ -33,7 +33,7 @@ export const DEMO_ACCOUNTS = [
     role: 'driver' as UserRole,
     name: 'Marcus Vance',
     title: 'Express Chilled Courier',
-    email: 'driver.marcus@freshmarket.com.au',
+    email: 'driver.marcus@threeboysmart.com.au',
     badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
     headerColor: 'from-blue-900 to-sky-900',
     iconBg: 'bg-blue-600',
@@ -44,8 +44,8 @@ export const DEMO_ACCOUNTS = [
   {
     role: 'vendor' as UserRole,
     name: 'Elena Rostova',
-    title: 'Metro Central Store Manager',
-    email: 'manager@metro-supermarket.com.au',
+    title: 'Perth Store Manager',
+    email: 'manager@threeboysmart.com.au',
     badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
     headerColor: 'from-amber-900 to-stone-900',
     iconBg: 'bg-amber-600',
@@ -73,7 +73,7 @@ export const AuthModal: React.FC = () => {
   const availableAccounts = DEMO_ACCOUNTS.filter((account) => isAdminRoute ? account.role === 'admin' : account.role === 'customer');
 
   const [selectedRoleTab, setSelectedRoleTab] = useState<UserRole>(isAdminRoute ? 'admin' : 'customer');
-  const [emailInput, setEmailInput] = useState(isAdminRoute ? 'admin@freshmarket.com.au' : 'alex.morgan@sydney.com.au');
+  const [emailInput, setEmailInput] = useState(isAdminRoute ? 'admin@threeboysmart.com.au' : 'alex.morgan@perth.com.au');
   const [passwordInput, setPasswordInput] = useState('••••••••••••');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -245,7 +245,7 @@ export const AuthModal: React.FC = () => {
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-600 transition-all"
-                  placeholder="name@freshmarket.com.au"
+                  placeholder="name@threeboysmart.com.au"
                 />
               </div>
             </div>

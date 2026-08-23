@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 const MarketplaceView: React.FC = () => {
-  const { filteredProducts, selectedVendorId, vendors, setSelectedCategory } = useApp();
+  const { filteredProducts, selectedVendorId, vendors, selectedSector, selectedCategory, setSelectedCategory, setSelectedSector } = useApp();
 
   const activeVendor = selectedVendorId
     ? vendors.find((v) => v.id === selectedVendorId)
@@ -40,9 +40,9 @@ const MarketplaceView: React.FC = () => {
         <div className="shop-breadcrumb">Home <span>/</span> Shop</div>
         <div className="shop-heading-row">
           <div>
-            <p className="shop-kicker">Fresh picks, pantry staples, everyday favourites</p>
-            <h1>Shop all products</h1>
-            <p className="shop-description">A considered collection of groceries and ready-to-enjoy favourites for the way you eat.</p>
+            <p className="shop-kicker">Perth delivery, considered essentials</p>
+            <h1>Groceries, fashion &amp; beauty</h1>
+            <p className="shop-description">Shop Three Boys Mart for everyday groceries, expressive fashion, and hair and beauty essentials.</p>
           </div>
         </div>
       </section>
@@ -52,11 +52,10 @@ const MarketplaceView: React.FC = () => {
       <section className="shop-catalog-shell">
         <aside className="shop-sidebar">
           <div className="sidebar-title">Browse by</div>
-          <button className="sidebar-link sidebar-link-active" onClick={() => setSelectedCategory('All')}>All products</button>
-          <button className="sidebar-link" onClick={() => setSelectedCategory('Fresh Produce')}>Fresh produce</button>
-          <button className="sidebar-link" onClick={() => setSelectedCategory('Pantry & Staples')}>Pantry & staples</button>
-          <button className="sidebar-link" onClick={() => setSelectedCategory('Bakery & Bread')}>Bakery & bread</button>
-          <button className="sidebar-link" onClick={() => setSelectedCategory('Personal Care')}>Beauty & care</button>
+          <button className={`sidebar-link ${selectedSector === 'all' ? 'sidebar-link-active' : ''}`} onClick={() => { setSelectedSector('all'); setSelectedCategory('All'); }}>All products</button>
+          <button className={`sidebar-link ${selectedSector === 'grocery' ? 'sidebar-link-active' : ''}`} onClick={() => { setSelectedSector('grocery'); setSelectedCategory('Fresh Produce'); }}>Groceries</button>
+          <button className={`sidebar-link ${selectedSector === 'lifestyle' && selectedCategory !== 'Hair & Beauty' ? 'sidebar-link-active' : ''}`} onClick={() => { setSelectedSector('lifestyle'); setSelectedCategory('All'); }}>Fashion</button>
+          <button className={`sidebar-link ${selectedCategory === 'Hair & Beauty' ? 'sidebar-link-active' : ''}`} onClick={() => { setSelectedSector('lifestyle'); setSelectedCategory('Hair & Beauty'); }}>Hair & beauty</button>
           <div className="sidebar-note"><TrendingDown size={15} /> Live surplus savings</div>
         </aside>
         <div className="shop-results">
@@ -67,7 +66,7 @@ const MarketplaceView: React.FC = () => {
         <div className="shop-results-heading">
           <div className="flex items-center gap-2">
             <h3>
-              {activeVendor ? `${activeVendor.name} Catalog` : 'Everything for the table'}
+              {activeVendor ? `${activeVendor.name} Catalog` : 'Browse the collection'}
             </h3>
           </div>
 
