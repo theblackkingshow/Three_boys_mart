@@ -27,6 +27,7 @@ import {
   updateProductDynamicPrices,
   calculateDynamicPrice,
 } from '../services/dynamicPricing';
+import { loadCatalogProducts, uploadProductAndInsert } from '../services/catalogApi';
 
 interface AppContextType {
   // Role & Current User
@@ -49,7 +50,7 @@ interface AppContextType {
   updatePricingConfig: (config: Partial<DynamicPricingConfig>) => void;
   updateProductStock: (productId: string, newStock: number) => void;
   updateProductBasePrice: (productId: string, newBasePrice: number) => void;
-  addNewProduct: (product: Omit<Product, 'id' | 'currentPrice'>) => void;
+  addNewProduct: (product: Omit<Product, 'id' | 'currentPrice'>, imageFile?: File) => Promise<void>;
 
   // Search & Filtering
   selectedSector: StoreSector;
@@ -225,6 +226,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [cart, setCart] = useState<CartItem[]>([]);
   const [driverTip, setDriverTip] = useState<number>(3.0);
 
+  useEffect(() => {
+    loadCatalogProducts()
+      .then((remoteProducts) => {
+        if (remoteProducts?.length) setProducts(updateProductDynamicPrices(remoteProducts, pricingConfig));
+      })
+      .catch(() => showToast('Using local catalog while the database is unavailable', 'warning'));
+  }, []);
+
 
   // Sync Dynamic Pricing on Stock or Config Change
   const updatePricingConfig = (newConfig: Partial<DynamicPricingConfig>) => {
@@ -271,7 +280,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     );
   };
 
-  const addNewProduct = (rawProduct: Omit<Product, 'id' | 'currentPrice'>) => {
+  const addNewProduct = async (rawProduct: Omit<Product, 'id' | 'currentPrice'>, imageFile?: File) => {
     const calc = calculateDynamicPrice(rawProduct.basePrice, rawProduct.stock, pricingConfig);
     const newProd: Product = {
       ...rawProduct,
@@ -280,6 +289,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       pricingTierInfo: calc.tierInfo,
     };
     setProducts((prev) => [newProd, ...prev]);
+    try {
+      const savedProduct = await uploadProductAndInsert(rawProduct, imageFile);
+      if (savedProduct) setProducts((prev) => [savedProduct, ...prev.filter((product) => product.id !== newProd.id)]);
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Product could not be saved remotely', 'warning');
+    }
     showToast(`Added ${newProd.name} to catalog`, 'success');
   };
 

@@ -52,7 +52,7 @@ export const SearchFilterBar: React.FC = () => {
     (priceRange[1] < 50 || priceRange[0] > 0 ? 1 : 0);
 
   return (
-    <div className="bg-white rounded-2xl border border-stone-200 p-4 shadow-xs mb-6 space-y-3">
+    <div className="catalog-toolbar">
       {/* Sector Quick Tabs: All / Grocery / Food */}
       <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-stone-100">
         <div className="flex items-center gap-1.5">

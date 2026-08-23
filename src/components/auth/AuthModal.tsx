@@ -69,9 +69,11 @@ export const DEMO_ACCOUNTS = [
 
 export const AuthModal: React.FC = () => {
   const { activeModal, setActiveModal, loginAs, userRole, showToast } = useApp();
+  const isAdminRoute = window.location.pathname === '/admin';
+  const availableAccounts = DEMO_ACCOUNTS.filter((account) => isAdminRoute ? account.role === 'admin' : account.role === 'customer');
 
-  const [selectedRoleTab, setSelectedRoleTab] = useState<UserRole>('admin');
-  const [emailInput, setEmailInput] = useState('admin@freshmarket.com.au');
+  const [selectedRoleTab, setSelectedRoleTab] = useState<UserRole>(isAdminRoute ? 'admin' : 'customer');
+  const [emailInput, setEmailInput] = useState(isAdminRoute ? 'admin@freshmarket.com.au' : 'alex.morgan@sydney.com.au');
   const [passwordInput, setPasswordInput] = useState('••••••••••••');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -79,14 +81,14 @@ export const AuthModal: React.FC = () => {
 
   const handleRoleTabChange = (role: UserRole) => {
     setSelectedRoleTab(role);
-    const account = DEMO_ACCOUNTS.find((a) => a.role === role);
+    const account = availableAccounts.find((a) => a.role === role);
     if (account) {
       setEmailInput(account.email);
     }
   };
 
   const handle1ClickLogin = (role: UserRole) => {
-    const account = DEMO_ACCOUNTS.find((a) => a.role === role);
+    const account = availableAccounts.find((a) => a.role === role);
     if (account) {
       loginAs(role, { name: account.name, email: account.email });
     }
@@ -97,7 +99,7 @@ export const AuthModal: React.FC = () => {
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
-      const account = DEMO_ACCOUNTS.find((a) => a.role === selectedRoleTab);
+      const account = availableAccounts.find((a) => a.role === selectedRoleTab);
       loginAs(selectedRoleTab, {
         name: account ? account.name : emailInput.split('@')[0],
         email: emailInput,
@@ -105,7 +107,7 @@ export const AuthModal: React.FC = () => {
     }, 400);
   };
 
-  const currentTabAccount = DEMO_ACCOUNTS.find((a) => a.role === selectedRoleTab)!;
+  const currentTabAccount = availableAccounts.find((a) => a.role === selectedRoleTab)!;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm animate-in fade-in duration-200">
@@ -151,7 +153,7 @@ export const AuthModal: React.FC = () => {
               Select User Role & Destination Page
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {DEMO_ACCOUNTS.map((acc) => {
+              {availableAccounts.map((acc) => {
                 const isSelected = selectedRoleTab === acc.role;
                 return (
                   <button

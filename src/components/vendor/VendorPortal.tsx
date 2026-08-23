@@ -47,6 +47,7 @@ export const VendorPortal: React.FC = () => {
   const [newImage, setNewImage] = useState(
     'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80'
   );
+  const [newImageFile, setNewImageFile] = useState<File | undefined>();
 
   const vendor = vendors.find((v) => v.id === selectedVendorId) || vendors[0];
   const vendorProducts = products.filter((p) => p.vendorId === vendor.id);
@@ -60,11 +61,11 @@ export const VendorPortal: React.FC = () => {
   // Store orders
   const storeOrders = orders.filter((o) => o.vendorIds.includes(vendor.id));
 
-  const handleCreateProduct = (e: React.FormEvent) => {
+  const handleCreateProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newProductName.trim()) return;
 
-    addNewProduct({
+    await addNewProduct({
       vendorId: vendor.id,
       vendorName: vendor.name,
       name: newProductName,
@@ -80,10 +81,11 @@ export const VendorPortal: React.FC = () => {
       brand: newBrand,
       image: newImage,
       dietary: ['Australian Grown'],
-    });
+    }, newImageFile);
 
     setIsAddProductOpen(false);
     setNewProductName('');
+    setNewImageFile(undefined);
   };
 
   return (
@@ -442,6 +444,22 @@ export const VendorPortal: React.FC = () => {
                     className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 font-mono"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="font-bold text-stone-700 block mb-1" htmlFor="product-image">Product Image</label>
+                <input
+                  type="file"
+                  id="product-image"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    setNewImageFile(file);
+                    if (file) setNewImage(URL.createObjectURL(file));
+                  }}
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2"
+                />
+                <span className="text-[10px] text-stone-400">Choose from camera or gallery on mobile.</span>
               </div>
 
               <div className="pt-2 flex justify-end gap-2">

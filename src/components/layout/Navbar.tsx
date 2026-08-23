@@ -373,7 +373,7 @@ export const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="customer-nav-actions flex items-center gap-2.5">
             <button
               id="btn-nav-cart-from-profile"
               onClick={() => setActiveModal('cart')}
@@ -518,58 +518,7 @@ export const Navbar: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-3 text-emerald-200 text-xs">
-            {/* Portal Switcher Dropdown */}
-            <div className="relative">
-              <button
-                id="btn-top-portal-switch"
-                onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
-                className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white px-2.5 py-0.5 rounded-full transition-colors font-semibold cursor-pointer text-[11px]"
-              >
-                <span>Switch Portal</span>
-                <ChevronDown className="w-3 h-3" />
-              </button>
-
-              {isRoleDropdownOpen && (
-                <div
-                  id="menu-top-portal-dropdown"
-                  className="absolute right-0 mt-2 w-72 bg-white text-stone-900 rounded-2xl shadow-2xl border border-stone-100 py-2 z-50 animate-in fade-in slide-in-from-top-2"
-                >
-                  <div className="px-3.5 py-2 border-b border-stone-100">
-                    <p className="text-xs font-bold text-stone-900">Switch Ecosystem Portal</p>
-                    <p className="text-[11px] text-stone-500">Each role has its own dedicated page</p>
-                  </div>
-                  <div className="p-1 space-y-1">
-                    {portals.map((p) => (
-                      <button
-                        key={p.tab}
-                        id={`btn-portal-item-${p.tab}`}
-                        onClick={() => switchPortal(p)}
-                        className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
-                          activeTab === p.tab
-                            ? 'bg-stone-100 text-stone-900 font-medium'
-                            : 'hover:bg-stone-50 text-stone-700'
-                        }`}
-                      >
-                        <div className={`p-2 rounded-lg ${p.color} shrink-0 mt-0.5`}>
-                          {p.icon}
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold flex items-center gap-1.5">
-                            {p.label}
-                            {activeTab === p.tab && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                            )}
-                          </div>
-                          <p className="text-[11px] text-stone-500 font-normal">{p.desc}</p>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          <span className="text-emerald-200 text-xs">Fresh groceries, chef-made favourites and everyday essentials.</span>
         </div>
       </div>
 
@@ -790,20 +739,6 @@ export const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* Quick Dynamic Price status */}
-          <div className="hidden xl:flex items-center gap-2 shrink-0">
-            <button
-              id="btn-pricing-rules-view"
-              onClick={() => {
-                setUserRole('admin');
-                setActiveTab('admin_dashboard');
-              }}
-              className="inline-flex items-center gap-1.5 text-stone-500 hover:text-emerald-700 text-xs font-medium cursor-pointer"
-            >
-              <TrendingDown className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Surplus Dynamic Pricing Active</span>
-            </button>
-          </div>
         </nav>
 
         {/* Mobile Menu Dropdown */}
@@ -866,42 +801,6 @@ export const Navbar: React.FC = () => {
               <span>Live Order Tracker</span>
             </button>
 
-            <div className="pt-2 px-3 py-1 text-[11px] font-bold text-stone-400 uppercase border-t border-stone-100">
-              Staff & Driver Portals
-            </div>
-            <button
-              onClick={() => {
-                setUserRole('driver');
-                setActiveTab('driver_portal');
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-blue-700 hover:bg-blue-50 font-semibold"
-            >
-              <Truck className="w-4 h-4" />
-              <span>Delivery Driver Page</span>
-            </button>
-            <button
-              onClick={() => {
-                setUserRole('admin');
-                setActiveTab('admin_dashboard');
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-purple-700 hover:bg-purple-50 font-semibold"
-            >
-              <Shield className="w-4 h-4" />
-              <span>Admin Center Page</span>
-            </button>
-            <button
-              onClick={() => {
-                setUserRole('vendor');
-                setActiveTab('vendor_portal');
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-amber-700 hover:bg-amber-50 font-semibold"
-            >
-              <Store className="w-4 h-4" />
-              <span>Supermarket Vendor Page</span>
-            </button>
           </div>
         )}
       </div>

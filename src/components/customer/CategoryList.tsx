@@ -58,10 +58,10 @@ export const CategoryList: React.FC = () => {
   });
 
   return (
-    <div className="py-3">
-      <div className="flex items-center justify-between mb-2.5">
+    <div className="category-strip">
+      <div className="category-strip-heading">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-bold text-stone-900 flex items-center gap-1.5">
+          <h3>
             <span>
               {selectedSector === 'food'
                 ? '🍕 Hot Food Kitchens, Delis & Fresh Meals'
@@ -91,7 +91,7 @@ export const CategoryList: React.FC = () => {
       </div>
 
       {/* Horizontal scrolling pill carousel */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      <div className="category-scroll">
         {/* 'All' button */}
         <button
           id="btn-category-all"

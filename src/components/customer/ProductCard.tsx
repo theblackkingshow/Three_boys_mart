@@ -31,7 +31,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div
       id={`card-product-${product.id}`}
-      className="group bg-white rounded-2xl border border-stone-200 hover:border-emerald-400/80 hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden relative"
+      className="product-tile group"
     >
       {/* Dynamic Inventory Badge Banner */}
       {isSurplus && (
@@ -58,7 +58,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Top Product Image & Vendor Tag */}
         <div
           onClick={() => openProductDetail(product)}
-          className="cursor-pointer relative aspect-4/3 rounded-xl overflow-hidden bg-stone-100 mb-3"
+          className="product-image-wrap cursor-pointer relative aspect-4/3 overflow-hidden bg-stone-100 mb-3"
         >
           <img
             src={product.image}

@@ -100,19 +100,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Ecosystem Portals */}
-          <div>
-            <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">Platform Portals</h5>
-            <ul className="space-y-2 text-xs text-stone-400">
-              <li className="hover:text-emerald-400 transition-colors">Customer Marketplace</li>
-              <li className="hover:text-emerald-400 transition-colors">Real-Time Courier GPS Tracking</li>
-              <li className="hover:text-emerald-400 transition-colors">Driver Dispatch App</li>
-              <li className="hover:text-emerald-400 transition-colors">Vendor Inventory Manager</li>
-              <li className="hover:text-emerald-400 transition-colors">Admin Command Center</li>
-              <li className="hover:text-emerald-400 transition-colors">Dynamic Pricing Engine</li>
-            </ul>
-          </div>
-
           {/* Payment Badges & Security */}
           <div>
             <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">Accepted Payment Gateways</h5>
@@ -146,9 +133,7 @@ export const Footer: React.FC = () => {
           <div className="flex items-center gap-4">
             <span className="hover:text-stone-300 transition-colors">Privacy Policy</span>
             <span>•</span>
-            <span className="hover:text-stone-300 transition-colors">Vendor Terms</span>
-            <span>•</span>
-            <span className="hover:text-stone-300 transition-colors">Driver Agreement</span>
+            <span className="hover:text-stone-300 transition-colors">Terms of Service</span>
           </div>
         </div>
 
