@@ -15,6 +15,7 @@ import {
   PaymentDetails,
   OrderMessage,
   FulfillmentType,
+  CatalogStatus,
 } from '../types';
 import {
   INITIAL_VENDORS,
@@ -54,6 +55,7 @@ interface AppContextType {
   updateProductBasePrice: (productId: string, newBasePrice: number) => void;
   updateProductImage: (productId: string, imageFile: File) => Promise<void>;
   deleteProduct: (productId: string) => Promise<void>;
+  updateProductCatalogStatus: (productId: string, status: CatalogStatus) => Promise<void>;
   addNewProduct: (product: Omit<Product, 'id' | 'currentPrice'>, imageFile?: File) => Promise<void>;
 
   // Search & Filtering
@@ -314,6 +316,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
+  const updateProductCatalogStatus = async (productId: string, status: CatalogStatus) => {
+    const product = products.find((item) => item.id === productId);
+    if (!product) return;
+    try {
+      await updateProductRecord(productId, { catalogStatus: status });
+      setProducts((prev) => prev.map((item) => item.id === productId ? { ...item, catalogStatus: status } : item));
+      showToast(`${product.name} marked ${status}`, 'success');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Catalog status could not be updated', 'warning');
+    }
+  };
+
   const addNewProduct = async (rawProduct: Omit<Product, 'id' | 'currentPrice'>, imageFile?: File) => {
     const calc = calculateDynamicPrice(rawProduct.basePrice, rawProduct.stock, pricingConfig);
     const newProd: Product = {
@@ -384,6 +398,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     ]);
     return products
       .filter((p) => {
+        if ((p.catalogStatus || 'active') !== 'active') return false;
         if (excludedCategories.has(p.category)) return false;
         // Sector filter (All / Grocery supermarket items / Prepared hot food & meals)
         if (selectedSector === 'grocery' && p.itemType !== 'grocery') return false;
@@ -854,6 +869,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         updateProductBasePrice,
         updateProductImage,
         deleteProduct,
+        updateProductCatalogStatus,
         addNewProduct,
         selectedSector,
         setSelectedSector,

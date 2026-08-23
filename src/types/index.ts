@@ -35,6 +35,7 @@ export type DietaryTag =
 
 export type MarketplaceTag = 'fashion' | 'groceries' | 'beauty' | 'hair' | 'crafts';
 export type MarketplaceDepartment = 'all' | 'groceries' | 'fashion' | 'hair_beauty';
+export type CatalogStatus = 'active' | 'draft' | 'archived';
 
 export interface Vendor {
   id: string;
@@ -75,6 +76,7 @@ export interface Product {
   name: string;
   category: GroceryCategory;
   categoryTags?: MarketplaceTag[];
+  catalogStatus?: CatalogStatus;
   itemType?: 'grocery' | 'food' | 'lifestyle'; // distinguishes marketplace departments
   description: string;
   basePrice: number; // Base reference price

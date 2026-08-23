@@ -12,7 +12,7 @@ const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', frontendOrigin);
-  res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-File-Name');
   if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();

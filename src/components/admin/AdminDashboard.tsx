@@ -40,6 +40,7 @@ export const AdminDashboard: React.FC = () => {
     updateProductBasePrice,
     updateProductImage,
     deleteProduct,
+    updateProductCatalogStatus,
     addNewProduct,
     showToast,
   } = useApp();
@@ -49,6 +50,7 @@ export const AdminDashboard: React.FC = () => {
   >('orders');
   const [orderSearch, setOrderSearch] = useState('');
   const [productSearch, setProductSearch] = useState('');
+  const [catalogStatusFilter, setCatalogStatusFilter] = useState<'all' | 'active' | 'draft' | 'archived'>('all');
   const [isAddProductOpen, setIsAddProductOpen] = useState(false);
   const [newProductName, setNewProductName] = useState('');
   const [newProductPrice, setNewProductPrice] = useState(5);
@@ -81,9 +83,8 @@ export const AdminDashboard: React.FC = () => {
   });
 
   const filteredCatalog = products.filter((product) =>
-    `${product.name} ${product.category} ${product.vendorName}`
-      .toLowerCase()
-      .includes(productSearch.toLowerCase())
+    `${product.name} ${product.category} ${product.vendorName}`.toLowerCase().includes(productSearch.toLowerCase()) &&
+    (catalogStatusFilter === 'all' || (product.catalogStatus || 'active') === catalogStatusFilter)
   );
 
   const handleAddProduct = async (event: React.FormEvent) => {
@@ -96,6 +97,7 @@ export const AdminDashboard: React.FC = () => {
       name: newProductName.trim(),
       category: newProductCategory,
       itemType: 'grocery',
+      catalogStatus: 'active',
       description: `Premium quality ${newProductName.trim()} supplied by ${vendor.name}.`,
       basePrice: Number(newProductPrice),
       stock: Number(newProductStock),
@@ -621,6 +623,17 @@ export const AdminDashboard: React.FC = () => {
                       className="w-full pl-8 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-600/30"
                     />
                     </div>
+                  <select
+                    aria-label="Filter catalog status"
+                    value={catalogStatusFilter}
+                    onChange={(e) => setCatalogStatusFilter(e.target.value as typeof catalogStatusFilter)}
+                    className="bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs font-semibold text-stone-900"
+                  >
+                    <option value="all">All statuses</option>
+                    <option value="active">Active</option>
+                    <option value="draft">Draft</option>
+                    <option value="archived">Archived</option>
+                  </select>
                   </div>
                 </div>
 
@@ -634,6 +647,7 @@ export const AdminDashboard: React.FC = () => {
                         <th className="pb-2.5">Base Price</th>
                         <th className="pb-2.5">Stock</th>
                         <th className="pb-2.5">Current Price</th>
+                        <th className="pb-2.5">Catalog Status</th>
                         <th className="pb-2.5 text-right">Status</th>
                         <th className="pb-2.5 text-right">Action</th>
                       </tr>
@@ -722,6 +736,18 @@ export const AdminDashboard: React.FC = () => {
                             />
                           </td>
                           <td className="py-3 pr-3 font-black text-stone-900">${product.currentPrice.toFixed(2)}</td>
+                          <td className="py-3 pr-3">
+                            <select
+                              aria-label={`Catalog status for ${product.name}`}
+                              value={product.catalogStatus || 'active'}
+                              onChange={(e) => void updateProductCatalogStatus(product.id, e.target.value as 'active' | 'draft' | 'archived')}
+                              className="bg-stone-50 border border-stone-200 rounded-lg px-2 py-1.5 text-xs font-semibold"
+                            >
+                              <option value="active">Active</option>
+                              <option value="draft">Draft</option>
+                              <option value="archived">Archived</option>
+                            </select>
+                          </td>
                           <td className="py-3 text-right">
                             <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${product.stock <= 0 ? 'bg-rose-100 text-rose-700' : product.stock > 35 ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-100 text-stone-600'}`}>
                               {product.stock <= 0 ? 'Out of stock' : product.stock > 35 ? 'Surplus' : 'In stock'}
