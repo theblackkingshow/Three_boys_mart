@@ -212,7 +212,7 @@ export const INITIAL_VENDORS: Vendor[] = [
   },
   {
     id: 'vendor-2',
-    name: 'Harvest Green Organic Mart',
+    name: 'Three Boys Market',
     type: 'Organic Mart',
     sector: 'grocery',
     rating: 4.9,
@@ -367,7 +367,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-3',
     vendorId: 'vendor-2',
-    vendorName: 'Harvest Green Organic Mart',
+    vendorName: 'Three Boys Market',
     name: 'Certified Organic Baby Spinach Leaves',
     category: 'Fresh Produce',
     description: 'Washed and ready-to-eat organic baby spinach tender leaves packed with iron and vitamins.',
@@ -387,7 +387,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-4',
     vendorId: 'vendor-2',
-    vendorName: 'Harvest Green Organic Mart',
+    vendorName: 'Three Boys Market',
     name: 'Organic Truss Vine Tomatoes',
     category: 'Fresh Produce',
     description: 'Aromatic, vine-ripened organic tomatoes bursting with rich natural sweetness.',
@@ -447,7 +447,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-7',
     vendorId: 'vendor-2',
-    vendorName: 'Harvest Green Organic Mart',
+    vendorName: 'Three Boys Market',
     name: 'Free-Range Pasture Eggs (Extra Large 700g)',
     category: 'Dairy & Eggs',
     description: 'Free-range pasture-raised eggs from hens with unlimited outdoor access (1500 hens/ha max).',
@@ -486,7 +486,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-9',
     vendorId: 'vendor-2',
-    vendorName: 'Harvest Green Organic Mart',
+    vendorName: 'Three Boys Market',
     name: 'Barista Oat Milk Plant-Based',
     category: 'Dairy & Eggs',
     description: 'Silky micro-foam plant milk made from 100% Australian rolled oats. Fortified with calcium.',
@@ -683,7 +683,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-19',
     vendorId: 'vendor-2',
-    vendorName: 'Harvest Green Organic Mart',
+    vendorName: 'Three Boys Market',
     name: 'Organic Artisanal Bronze-Die Rigatoni',
     category: 'Pantry & Staples',
     description: 'Slow-dried durum wheat semolina pasta with rough textured bronze-cut ridges to hold pasta sauces.',
@@ -723,7 +723,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-21',
     vendorId: 'vendor-2',
-    vendorName: 'Harvest Green Organic Mart',
+    vendorName: 'Three Boys Market',
     name: 'Organic Ginger Lemon Living Kombucha',
     category: 'Beverages & Juices',
     description: 'Naturally fermented with live probiotics, cold pressed ginger root, lemon juice and green tea.',
@@ -923,7 +923,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-31',
     vendorId: 'vendor-2',
-    vendorName: 'Harvest Green Organic Mart',
+    vendorName: 'Three Boys Market',
     name: 'Zinc Mineral Invisible Sunscreen SPF 50+ (Water Resistant 4h)',
     category: 'Personal Care',
     description: 'Reef-friendly broad spectrum UV protection with vitamin E and aloe vera. Non-greasy finish.',
@@ -1129,7 +1129,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
 // Fashion marketplace products
 RAW_PRODUCTS.push(
   {
-    id: 'prod-fashion-men-1', vendorId: 'vendor-2', vendorName: 'Harvest Green Organic Mart',
+    id: 'prod-fashion-men-1', vendorId: 'vendor-2', vendorName: 'Three Boys Market',
     name: 'Relaxed Kente Panel Shirt', category: 'Men\'s Fashion', itemType: 'lifestyle',
     description: 'A relaxed cotton shirt finished with a bold woven panel for everyday statement dressing.', basePrice: 58,
     unit: '1 shirt', image: 'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=500&auto=format&fit=crop&q=80', stock: 14, initialStock: 20,
@@ -1143,7 +1143,7 @@ RAW_PRODUCTS.push(
     lowStockThreshold: 3, surplusThreshold: 35, dietary: [], origin: 'New South Wales', brand: 'Common Thread', categoryTags: ['fashion'],
   },
   {
-    id: 'prod-fashion-women-1', vendorId: 'vendor-2', vendorName: 'Harvest Green Organic Mart',
+    id: 'prod-fashion-women-1', vendorId: 'vendor-2', vendorName: 'Three Boys Market',
     name: 'Printed Wrap Midi Dress', category: 'Women\'s Fashion', itemType: 'lifestyle',
     description: 'A fluid wrap silhouette with an expressive print for warm afternoons and special plans.', basePrice: 86,
     unit: '1 dress', image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500&auto=format&fit=crop&q=80', stock: 11, initialStock: 18,

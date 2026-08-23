@@ -368,6 +368,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         // Sector filter (All / Grocery supermarket items / Prepared hot food & meals)
         if (selectedSector === 'grocery' && p.itemType !== 'grocery') return false;
         if (selectedSector === 'food' && p.itemType !== 'food') return false;
+        if (selectedSector === 'lifestyle' && p.itemType !== 'lifestyle') return false;
         // Vendor filter
         if (selectedVendorId && p.vendorId !== selectedVendorId) return false;
         // Category filter

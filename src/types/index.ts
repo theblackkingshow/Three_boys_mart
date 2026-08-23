@@ -17,7 +17,10 @@ export type GroceryCategory =
   | 'Artisan Pizza & Pasta'
   | 'Household & Cleaning'
   | 'Personal Care'
-  | 'Organic & Specialty';
+  | 'Organic & Specialty'
+  | 'Men\'s Fashion'
+  | 'Women\'s Fashion'
+  | 'Kids\' Fashion';
 
 export type DietaryTag =
   | 'Organic'
@@ -70,7 +73,7 @@ export interface Product {
   name: string;
   category: GroceryCategory;
   categoryTags?: MarketplaceTag[];
-  itemType?: 'grocery' | 'food'; // distinguishes raw groceries from prepared hot food/meals
+  itemType?: 'grocery' | 'food' | 'lifestyle'; // distinguishes marketplace departments
   description: string;
   basePrice: number; // Base reference price
   currentPrice: number; // Computed dynamic price based on stock level
