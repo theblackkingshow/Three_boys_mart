@@ -20,6 +20,24 @@ app.use((req, res, next) => {
 
 app.use(express.json({ limit: '1mb' }));
 
+app.post('/api/shipping/quote', (req, res) => {
+  const subtotal = Number(req.body?.subtotal) || 0;
+  const fee = subtotal >= 100 ? 0 : 10;
+  res.json({
+    fee,
+    provider: process.env.COURIER_PROVIDER ? 'courier_ready' : 'flat_rate',
+    message: fee === 0 ? 'Free local delivery' : 'Standard local delivery',
+    courierReady: { senderPostcode: process.env.SENDER_POSTCODE || '2000', recipientPostcode: String(req.body?.postcode || '') },
+  });
+});
+
+app.post('/api/orders', (req, res) => {
+  if (!req.body?.fulfillmentType || !req.body?.deliveryAddress) {
+    return res.status(400).json({ error: 'fulfillmentType and deliveryAddress are required' });
+  }
+  res.status(202).json({ accepted: true, orderNumber: req.body.orderNumber });
+});
+
 const supabaseHeaders = () => ({
   apikey: supabaseServiceRoleKey || '',
   Authorization: `Bearer ${supabaseServiceRoleKey || ''}`,

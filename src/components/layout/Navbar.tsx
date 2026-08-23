@@ -9,7 +9,6 @@ import {
   Truck,
   Store,
   ChevronDown,
-  TrendingDown,
   Menu,
   X,
   Clock,
@@ -32,7 +31,6 @@ export const Navbar: React.FC = () => {
     setSelectedVendorId,
     searchQuery,
     setSearchQuery,
-    pricingConfig,
     activeDriver,
     activeTrackingOrderId,
   } = useApp();
@@ -114,7 +112,7 @@ export const Navbar: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-base font-bold tracking-tight text-white font-sans">
-                  FreshMarket Driver App
+                  Three Boys Mart Driver App
                 </h1>
                 <span className="text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30 px-2 py-0.5 rounded-full">
                   Driver Portal Page
@@ -201,7 +199,7 @@ export const Navbar: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-base font-bold tracking-tight text-white font-sans">
-                  FreshMarket Admin Center
+                  Three Boys Mart Admin Center
                 </h1>
                 <span className="text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-400/30 px-2 py-0.5 rounded-full">
                   Admin Page
@@ -504,24 +502,6 @@ export const Navbar: React.FC = () => {
   // DEFAULT: Pure Customer Food & Grocery Storefront Navbar
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xs">
-      {/* Top Banner: Dynamic Pricing Alert + Portal Gateway Switcher */}
-      <div className="bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 text-emerald-50 px-4 py-1.5 text-xs">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-            </span>
-            <span className="font-medium">⚡ Live Dynamic Pricing Active:</span>
-            <span className="hidden sm:inline text-emerald-200">
-              Save up to {pricingConfig.surplusDiscountPercentage}% on surplus fresh groceries and hot daily chef specials.
-            </span>
-          </div>
-
-          <span className="text-emerald-200 text-xs">Fresh groceries, chef-made favourites and everyday essentials.</span>
-        </div>
-      </div>
-
       {/* Main Header Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
@@ -543,10 +523,7 @@ export const Navbar: React.FC = () => {
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="text-xl font-black tracking-tight text-stone-900 font-serif">
-                    FreshMarket<span className="text-emerald-600">.</span>
-                  </span>
-                  <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded uppercase tracking-wider">
-                    Food & Groceries
+                    Three Boys Mart<span className="text-emerald-600">.</span>
                   </span>
                 </div>
               </div>
@@ -585,7 +562,7 @@ export const Navbar: React.FC = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search fresh groceries, hot woodfired pizza, rotisserie chicken, sushi, bakery..."
+                placeholder="Search groceries, style, beauty, home, gifts and more..."
                 className="w-full bg-stone-50 border border-stone-200 rounded-full pl-10 pr-10 py-2 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-600 transition-all shadow-2xs"
               />
               <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -666,7 +643,7 @@ export const Navbar: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search groceries, hot food, meals..."
+              placeholder="Search the marketplace..."
               className="w-full bg-stone-50 border border-stone-200 rounded-full pl-10 pr-8 py-2 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
             />
             <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -674,7 +651,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Pure Customer Shopping Sub-Navigation: Grocery vs Hot Food Selection */}
-        <nav className="flex items-center justify-between overflow-x-auto py-2 border-t border-stone-100 scrollbar-none text-xs">
+        <nav className="customer-sector-nav flex items-center justify-between overflow-x-auto py-2 border-t border-stone-100 scrollbar-none text-xs">
           <div className="flex items-center gap-1.5 shrink-0">
             {/* All Food & Grocery */}
             <button

@@ -14,6 +14,7 @@ import {
   DynamicPricingConfig,
   PaymentDetails,
   OrderMessage,
+  FulfillmentType,
 } from '../types';
 import {
   INITIAL_VENDORS,
@@ -28,6 +29,7 @@ import {
   calculateDynamicPrice,
 } from '../services/dynamicPricing';
 import { loadCatalogProducts, uploadProductAndInsert, uploadProductImage, updateProductRecord } from '../services/catalogApi';
+import { submitOrderToBackend } from '../services/shippingApi';
 
 interface AppContextType {
   // Role & Current User
@@ -97,6 +99,8 @@ interface AppContextType {
   activeTrackingOrder: Order | undefined;
   createOrder: (orderData: {
     payment: PaymentDetails;
+    fulfillmentType?: FulfillmentType;
+    deliveryFee?: number;
     addressId?: string;
     customAddress?: Order['deliveryAddress'];
   }) => Order;
@@ -502,6 +506,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   // Order Placement
   const createOrder = (orderData: {
     payment: PaymentDetails;
+    fulfillmentType?: FulfillmentType;
+    deliveryFee?: number;
     addressId?: string;
     customAddress?: Order['deliveryAddress'];
   }): Order | null => {
@@ -543,6 +549,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
     const randomDriver = drivers.find((d) => d.status === 'available') || drivers[0];
 
+    const fulfillmentType = orderData.fulfillmentType || 'delivery';
+    const orderDeliveryFee = orderData.deliveryFee ?? cartDeliveryFee;
+    const orderTotal = Number((cartSubtotal + orderDeliveryFee + cartServiceFee + driverTip).toFixed(2));
+
     const newOrder: Order = {
       id: `ord-${Date.now()}`,
       orderNumber: `FM-${Math.floor(10000 + Math.random() * 90000)}`,
@@ -550,6 +560,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       customerName: userProfile.name,
       customerPhone: userProfile.phone,
       customerEmail: userProfile.email,
+      fulfillmentType,
       deliveryAddress: {
         street: address.street,
         unitNumber: address.unitNumber,
@@ -564,11 +575,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       vendorNames,
       items: orderItems,
       subtotal: cartSubtotal,
-      deliveryFee: cartDeliveryFee,
+      deliveryFee: orderDeliveryFee,
       serviceFee: cartServiceFee,
       driverTip,
       discountAmount: 0,
-      totalAmount: cartTotal,
+      totalAmount: orderTotal,
       currency: 'AUD',
       status: 'order_placed',
       payment: orderData.payment,
@@ -585,7 +596,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           label: `Order Placed & Payment Confirmed (${orderData.payment.provider})`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           completed: true,
-          notes: `Paid $${cartTotal.toFixed(2)} AUD via ${orderData.payment.provider}. Transaction ID: ${orderData.payment.transactionId}`,
+          notes: `Paid $${orderTotal.toFixed(2)} AUD via ${orderData.payment.provider}. Transaction ID: ${orderData.payment.transactionId}`,
         },
         {
           status: 'vendor_accepted',
@@ -623,7 +634,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           id: `msg-${Date.now()}`,
           orderId: `ord-${Date.now()}`,
           senderRole: 'system',
-          senderName: 'FreshMarket Engine',
+          senderName: 'Three Boys Mart Engine',
           text: `Your grocery order #${orderData.payment.transactionId.slice(-6)} has been placed! Stores are preparing your items.`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
@@ -642,6 +653,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setActiveModal(null);
     setActiveTab('tracking');
     showToast(`Order ${newOrder.orderNumber} successfully placed!`, 'success');
+    void submitOrderToBackend(newOrder).catch(() => showToast('Order saved locally; backend sync is unavailable', 'warning'));
 
     return newOrder;
   };

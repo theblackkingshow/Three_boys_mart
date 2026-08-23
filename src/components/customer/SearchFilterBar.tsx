@@ -91,9 +91,6 @@ export const SearchFilterBar: React.FC = () => {
           </button>
         </div>
 
-        <span className="text-xs text-stone-500 font-medium">
-          Showing <strong className="text-stone-900">{filteredProducts.length}</strong> items
-        </span>
       </div>
 
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
@@ -105,7 +102,7 @@ export const SearchFilterBar: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search groceries, woodfired pizza, sushi, fresh produce, milk, bakery..."
+            placeholder="Search groceries, style, beauty, home, gifts and more..."
             className="w-full pl-10 pr-10 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm text-stone-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/30 focus:border-emerald-600 transition-all"
           />
           {searchQuery && (

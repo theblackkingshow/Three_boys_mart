@@ -100,12 +100,31 @@ export const GROCERY_CATEGORIES: {
     image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&auto=format&fit=crop&q=80',
     badge: 'Certified',
   },
+  {
+    name: 'Men\'s Fashion',
+    icon: 'Shirt',
+    description: 'Easy everyday pieces, statement prints and considered accessories.',
+    image: 'https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=600&auto=format&fit=crop&q=80',
+    badge: 'New Edit',
+  },
+  {
+    name: 'Women\'s Fashion',
+    icon: 'Shirt',
+    description: 'Modern wardrobe staples, occasion dressing and expressive style.',
+    image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&auto=format&fit=crop&q=80',
+  },
+  {
+    name: 'Kids\' Fashion',
+    icon: 'Heart',
+    description: 'Comfortable, playful pieces made for growing days and big adventures.',
+    image: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=600&auto=format&fit=crop&q=80',
+  },
 ];
 
 export const INITIAL_VENDORS: Vendor[] = [
   {
     id: 'vendor-1',
-    name: 'Metro Supermarket CBD',
+    name: 'Three Boys Market',
     type: 'Supermarket',
     sector: 'grocery',
     rating: 4.8,
@@ -308,7 +327,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-1',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Australian Hass Avocados (Pack of 3)',
     category: 'Fresh Produce',
     description: 'Creamy, rich premium Australian Hass avocados, hand-selected for optimal ripeness.',
@@ -328,7 +347,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-2',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Crisp Pink Lady Apples',
     category: 'Fresh Produce',
     description: 'Sweet and tangy fresh Australian Pink Lady apples, perfect for snacking or baking.',
@@ -387,7 +406,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-5',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Cavendish Sweet Bananas',
     category: 'Fresh Produce',
     description: 'Fresh yellow Cavendish bananas sourced directly from tropical Queensland.',
@@ -408,7 +427,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-6',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Farmhouse Pure Full Cream Milk',
     category: 'Dairy & Eggs',
     description: 'Rich, creamy pasteurised Australian whole milk from pasture-fed dairy herds.',
@@ -526,7 +545,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-12',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Whole Grain & Seed Toasting Loaf',
     category: 'Bakery & Bread',
     description: 'Packed with sunflower seeds, linseeds, rolled barley and pumpkin seeds.',
@@ -586,7 +605,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-15',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Free-Range Australian Chicken Breast Fillets',
     category: 'Meat & Seafood',
     description: 'Tender, skinless and boneless free-range chicken breast with zero added hormones.',
@@ -645,7 +664,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-18',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Fragrant Premium Jasmine Rice',
     category: 'Pantry & Staples',
     description: 'Naturally fragrant long grain jasmine rice, perfect accompaniment to stir-fries and curries.',
@@ -685,7 +704,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-20',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Cold Pressed Valencia 100% Orange Juice',
     category: 'Beverages & Juices',
     description: 'Never from concentrate. 100% freshly squeezed Australian Valencia oranges with juicy pulp.',
@@ -711,7 +730,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     basePrice: 4.5,
     unit: '330ml bottle',
     unitPriceComparison: '$13.64/L',
-    image: 'https://images.unsplash.com/photo-1559839914-ba2a0f8eb330?w=500&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=500&auto=format&fit=crop&q=80',
     stock: 19,
     initialStock: 30,
     lowStockThreshold: 6,
@@ -744,7 +763,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-23',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Kettle Slow Cooked Sea Salt Chips',
     category: 'Snacks & Treats',
     description: 'Thick-cut Australian potatoes slow cooked in 100% high oleic sunflower oil with sea salt flakes.',
@@ -784,7 +803,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-25',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Frozen Wild Organic Blueberries',
     category: 'Frozen Foods',
     description: 'Snap-frozen at peak harvest to lock in potent antioxidants and deep sweet berry flavor.',
@@ -843,7 +862,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-28',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Whole Herb & Lemon Hot Roast Rotisserie Chicken',
     category: 'Deli & Prepared',
     description: 'Slow-roasted to juicy golden perfection seasoned with rosemary, garlic, and sea salt.',
@@ -864,7 +883,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   {
     id: 'prod-29',
     vendorId: 'vendor-1',
-    vendorName: 'Metro Supermarket CBD',
+    vendorName: 'Three Boys Market',
     name: 'Eco-Friendly Plant-Based Dishwashing Liquid (Lime & Mandarin)',
     category: 'Household & Cleaning',
     description: 'Tough on grease, gentle on hands and septic safe. Zero phosphates or petrochemicals.',
@@ -972,7 +991,7 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
     basePrice: 22.0,
     unit: '1 serving (450g)',
     unitPriceComparison: '$22.00/meal',
-    image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=500&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=500&auto=format&fit=crop&q=80',
     stock: 15,
     initialStock: 25,
     lowStockThreshold: 5,
@@ -1107,6 +1126,52 @@ const RAW_PRODUCTS: Omit<Product, 'currentPrice'>[] = [
   },
 ];
 
+// Fashion marketplace products
+RAW_PRODUCTS.push(
+  {
+    id: 'prod-fashion-men-1', vendorId: 'vendor-2', vendorName: 'Harvest Green Organic Mart',
+    name: 'Relaxed Kente Panel Shirt', category: 'Men\'s Fashion', itemType: 'lifestyle',
+    description: 'A relaxed cotton shirt finished with a bold woven panel for everyday statement dressing.', basePrice: 58,
+    unit: '1 shirt', image: 'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=500&auto=format&fit=crop&q=80', stock: 14, initialStock: 20,
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Victoria', brand: 'Three Boys Edit', categoryTags: ['fashion'],
+  },
+  {
+    id: 'prod-fashion-men-2', vendorId: 'vendor-5', vendorName: 'Sunrise Bakery & Pantry Co.',
+    name: 'Textured Linen Overshirt', category: 'Men\'s Fashion', itemType: 'lifestyle',
+    description: 'A breathable linen layer in a versatile neutral tone, cut for easy weekend wear.', basePrice: 72,
+    unit: '1 overshirt', image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=500&auto=format&fit=crop&q=80', stock: 9, initialStock: 15,
+    lowStockThreshold: 3, surplusThreshold: 35, dietary: [], origin: 'New South Wales', brand: 'Common Thread', categoryTags: ['fashion'],
+  },
+  {
+    id: 'prod-fashion-women-1', vendorId: 'vendor-2', vendorName: 'Harvest Green Organic Mart',
+    name: 'Printed Wrap Midi Dress', category: 'Women\'s Fashion', itemType: 'lifestyle',
+    description: 'A fluid wrap silhouette with an expressive print for warm afternoons and special plans.', basePrice: 86,
+    unit: '1 dress', image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500&auto=format&fit=crop&q=80', stock: 11, initialStock: 18,
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Queensland', brand: 'Mara Studio', categoryTags: ['fashion'],
+  },
+  {
+    id: 'prod-fashion-women-2', vendorId: 'vendor-6', vendorName: 'Colesworth Express Hub',
+    name: 'Handwoven Raffia Market Bag', category: 'Women\'s Fashion', itemType: 'lifestyle',
+    description: 'A roomy handwoven carryall for market mornings, beach days and city errands.', basePrice: 44,
+    unit: '1 bag', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=500&auto=format&fit=crop&q=80', stock: 22, initialStock: 30,
+    lowStockThreshold: 5, surplusThreshold: 35, dietary: [], origin: 'South Australia', brand: 'Made Well', categoryTags: ['fashion', 'crafts'],
+  },
+  {
+    id: 'prod-fashion-kids-1', vendorId: 'vendor-5', vendorName: 'Sunrise Bakery & Pantry Co.',
+    name: 'Colourblock Cotton Play Set', category: 'Kids\' Fashion', itemType: 'lifestyle',
+    description: 'Soft, durable cotton separates made for playground afternoons and curious little explorers.', basePrice: 38,
+    unit: '2-piece set', image: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=500&auto=format&fit=crop&q=80', stock: 17, initialStock: 25,
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'Victoria', brand: 'Little Day', categoryTags: ['fashion'],
+  },
+  {
+    id: 'prod-fashion-kids-2', vendorId: 'vendor-6', vendorName: 'Colesworth Express Hub',
+    name: 'Mini Canvas Weekend Sneakers', category: 'Kids\' Fashion', itemType: 'lifestyle',
+    description: 'Lightweight canvas sneakers with flexible soles for busy little feet.', basePrice: 32,
+    unit: '1 pair', image: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=500&auto=format&fit=crop&q=80', stock: 13, initialStock: 20,
+    lowStockThreshold: 4, surplusThreshold: 35, dietary: [], origin: 'New South Wales', brand: 'Bright Steps', categoryTags: ['fashion'],
+  },
+);
+
 // Initialize dynamic prices for all initial products
 export const INITIAL_PRODUCTS: Product[] = updateProductDynamicPrices(
   RAW_PRODUCTS.map((p) => ({
@@ -1224,6 +1289,7 @@ export const INITIAL_ORDERS: Order[] = [
     customerName: 'Alexandria Morgan',
     customerPhone: '+61 411 234 567',
     customerEmail: 'alex.morgan@sydney.com.au',
+    fulfillmentType: 'delivery',
     deliveryAddress: {
       street: '72 Campbell Street',
       unitNumber: 'Apartment 4B',
@@ -1235,13 +1301,13 @@ export const INITIAL_ORDERS: Order[] = [
       lng: 151.2118,
     },
     vendorIds: ['vendor-1', 'vendor-5'],
-    vendorNames: ['Metro Supermarket CBD', 'Sunrise Bakery & Pantry Co.'],
+    vendorNames: ['Three Boys Market', 'Sunrise Bakery & Pantry Co.'],
     items: [
       {
         productId: 'prod-1',
         productName: 'Australian Hass Avocados (Pack of 3)',
         vendorId: 'vendor-1',
-        vendorName: 'Metro Supermarket CBD',
+        vendorName: 'Three Boys Market',
         category: 'Fresh Produce',
         quantity: 1,
         unitPrice: 3.83, // Dynamic surplus price
@@ -1269,7 +1335,7 @@ export const INITIAL_ORDERS: Order[] = [
         productId: 'prod-6',
         productName: 'Farmhouse Pure Full Cream Milk',
         vendorId: 'vendor-1',
-        vendorName: 'Metro Supermarket CBD',
+        vendorName: 'Three Boys Market',
         category: 'Dairy & Eggs',
         quantity: 2,
         unitPrice: 3.32, // Dynamic surplus price
@@ -1349,7 +1415,7 @@ export const INITIAL_ORDERS: Order[] = [
         id: 'msg-1',
         orderId: 'ord-1092',
         senderRole: 'system',
-        senderName: 'FreshMarket Bot',
+        senderName: 'Three Boys Mart Bot',
         text: 'Order #FM-98421 confirmed! Your groceries are being packed.',
         timestamp: '14:15',
       },
@@ -1357,7 +1423,7 @@ export const INITIAL_ORDERS: Order[] = [
         id: 'msg-2',
         orderId: 'ord-1092',
         senderRole: 'vendor',
-        senderName: 'Metro Supermarket CBD',
+        senderName: 'Three Boys Market',
         text: 'Avocados selected are perfectly ripe for today/tomorrow!',
         timestamp: '14:22',
       },

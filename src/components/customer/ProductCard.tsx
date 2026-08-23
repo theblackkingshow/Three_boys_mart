@@ -68,7 +68,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           />
 
           {/* Vendor chip */}
-          <div className="absolute bottom-2 left-2 bg-stone-900/80 backdrop-blur-xs text-white text-[10px] font-medium px-2 py-0.5 rounded-md flex items-center gap-1 max-w-[85%] truncate">
+          <div className="product-vendor-chip absolute bottom-2 left-2 bg-stone-900/80 backdrop-blur-xs text-white text-[10px] font-medium px-2 py-0.5 rounded-md flex items-center gap-1 max-w-[85%] truncate">
             <Store className="w-2.5 h-2.5 shrink-0 text-emerald-400" />
             <span className="truncate">{product.vendorName}</span>
           </div>
@@ -82,7 +82,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Dietary / Origin tags */}
-        <div className="flex flex-wrap items-center gap-1 mb-1.5 min-h-[20px]">
+        <div className="product-tags flex flex-wrap items-center gap-1 mb-1.5 min-h-[20px]">
           {product.dietary.slice(0, 2).map((d) => (
             <span
               key={d}
@@ -115,7 +115,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Inventory Stock Indicator */}
-        <div className="mb-3">
+        <div className="product-stock-meter mb-3">
           <div className="flex items-center justify-between text-[10px] text-stone-400 font-medium mb-1">
             <span>Vendor Stock: {product.stock} units</span>
             <span

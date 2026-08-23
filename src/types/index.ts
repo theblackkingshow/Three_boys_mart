@@ -29,6 +29,8 @@ export type DietaryTag =
   | 'Australian Grown'
   | 'Sugar-Free';
 
+export type MarketplaceTag = 'fashion' | 'groceries' | 'beauty' | 'crafts';
+
 export interface Vendor {
   id: string;
   name: string;
@@ -67,7 +69,8 @@ export interface Product {
   vendorName: string;
   name: string;
   category: GroceryCategory;
-  itemType?: 'grocery' | 'food'; // distinguishes between raw groceries and prepared hot food/meals
+  categoryTags?: MarketplaceTag[];
+  itemType?: 'grocery' | 'food'; // distinguishes raw groceries from prepared hot food/meals
   description: string;
   basePrice: number; // Base reference price
   currentPrice: number; // Computed dynamic price based on stock level
@@ -115,6 +118,8 @@ export type OrderStatus =
   | 'arrived_destination'
   | 'delivered'
   | 'cancelled';
+
+export type FulfillmentType = 'pickup' | 'delivery';
 
 export type PaymentMethodType =
   | 'stripe_card'
@@ -199,6 +204,7 @@ export interface Order {
   customerName: string;
   customerPhone: string;
   customerEmail: string;
+  fulfillmentType: FulfillmentType;
   deliveryAddress: {
     street: string;
     unitNumber?: string;

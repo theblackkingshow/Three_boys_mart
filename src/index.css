@@ -41,5 +41,13 @@ body { background:var(--paper); color:var(--ink); font-family:'DM Sans',sans-ser
 .product-image-wrap { border-radius:0; margin:-12px -12px 13px; width:calc(100% + 24px); }
 .product-tile h4 { font-size:13px; font-weight:600; min-height:34px; }
 .product-tile .text-base { color:var(--accent); font-family:'DM Sans',sans-serif; }
+.customer-sector-nav { display:none; }
+.product-vendor-chip { background:rgba(37,34,30,.78); }
+.product-tags { min-height:0; }
+.product-stock-meter { display:none; }
+.product-tile .product-image-wrap img { transition:transform .45s ease; }
+.product-tile .product-image-wrap { aspect-ratio:1/1; }
+.product-tile h4 { line-height:1.3; }
+.product-tile > div:last-child { padding:0 12px 15px; }
 @media (max-width:900px) { .shop-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media (max-width:680px) { .shop-page { padding:0 16px 48px; } .shop-heading-row { align-items:start; flex-direction:column; gap:12px; } .shop-catalog-shell { display:block; padding-top:22px; } .shop-sidebar { display:none; } .shop-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 10px; } .product-tile [class~="p-3.5"] { padding:9px; } .product-image-wrap { margin:-9px -9px 11px; width:calc(100% + 18px); } .product-tile .text-base { font-size:15px; } body { overflow-x:hidden; } #btn-nav-profile { display:none; } .customer-nav-actions { gap:4px; } #btn-nav-cart { padding-left:8px; padding-right:8px; } .shop-results-heading { align-items:flex-start; flex-wrap:wrap; gap:5px 12px; } .shop-results-heading > .surplus-pill { width:100%; } }

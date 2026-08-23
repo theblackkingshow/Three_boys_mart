@@ -40,11 +40,10 @@ const MarketplaceView: React.FC = () => {
         <div className="shop-breadcrumb">Home <span>/</span> Shop</div>
         <div className="shop-heading-row">
           <div>
-            <p className="shop-kicker">Curated for your kitchen</p>
+            <p className="shop-kicker">Fresh picks, pantry staples, everyday favourites</p>
             <h1>Shop all products</h1>
-            <p className="shop-description">Fresh groceries, pantry essentials and chef-made favourites, delivered to your door.</p>
+            <p className="shop-description">A considered collection of groceries and ready-to-enjoy favourites for the way you eat.</p>
           </div>
-          <div className="shop-count"><strong>{filteredProducts.length}</strong> products</div>
         </div>
       </section>
 
@@ -68,11 +67,8 @@ const MarketplaceView: React.FC = () => {
         <div className="shop-results-heading">
           <div className="flex items-center gap-2">
             <h3>
-              {activeVendor ? `${activeVendor.name} Catalog` : 'Available Groceries & Prepared Meals'}
+              {activeVendor ? `${activeVendor.name} Catalog` : 'Everything for the table'}
             </h3>
-            <span className="result-pill">
-              {filteredProducts.length} items
-            </span>
           </div>
 
           {surplusCount > 0 && (
@@ -88,7 +84,7 @@ const MarketplaceView: React.FC = () => {
             <div className="w-16 h-16 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mx-auto mb-4">
               <ShoppingBag className="w-8 h-8" />
             </div>
-            <h4 className="text-base font-bold text-stone-800">No matching groceries found</h4>
+            <h4 className="text-base font-bold text-stone-800">No matching products found</h4>
             <p className="text-xs text-stone-500 max-w-sm mx-auto mt-1 mb-4">
               Try adjusting your category, price range, dietary tags, or search query.
             </p>

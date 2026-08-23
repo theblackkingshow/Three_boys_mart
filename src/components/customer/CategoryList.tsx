@@ -13,6 +13,10 @@ import {
   Heart,
   Leaf,
   Layers,
+  Home,
+  Gift,
+  Gamepad2,
+  Shirt,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { GroceryCategory } from '../../types';
@@ -31,6 +35,10 @@ const iconMap: Record<string, React.ReactNode> = {
   Sparkles: <Sparkles className="w-4 h-4" />,
   Heart: <Heart className="w-4 h-4" />,
   Leaf: <Leaf className="w-4 h-4" />,
+  Home: <Home className="w-4 h-4" />,
+  Gift: <Gift className="w-4 h-4" />,
+  Gamepad2: <Gamepad2 className="w-4 h-4" />,
+  Shirt: <Shirt className="w-4 h-4" />,
 };
 
 export const CategoryList: React.FC = () => {
@@ -67,7 +75,7 @@ export const CategoryList: React.FC = () => {
                 ? '🍕 Hot Food Kitchens, Delis & Fresh Meals'
                 : selectedSector === 'grocery'
                 ? '🥦 Fresh Supermarket Aisles & Produce'
-                : '🛒 Food & Grocery Categories'}
+                : '🛒 Browse the Marketplace'}
             </span>
           </h3>
           {selectedSector !== 'all' && (

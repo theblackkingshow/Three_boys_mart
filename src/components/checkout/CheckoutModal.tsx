@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   X,
   CreditCard,
@@ -17,14 +17,14 @@ import {
   Check,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { PaymentMethodType, PaymentDetails } from '../../types';
+import { FulfillmentType, PaymentMethodType, PaymentDetails } from '../../types';
+import { getShippingQuote } from '../../services/shippingApi';
 
 export const CheckoutModal: React.FC = () => {
   const {
     activeModal,
     setActiveModal,
     cart,
-    cartTotal,
     cartSubtotal,
     cartDeliveryFee,
     cartServiceFee,
@@ -32,6 +32,14 @@ export const CheckoutModal: React.FC = () => {
     userProfile,
     createOrder,
   } = useApp();
+
+  const [fulfillmentType, setFulfillmentType] = useState<FulfillmentType>('delivery');
+  const [deliveryFee, setDeliveryFee] = useState(cartDeliveryFee);
+  const [quoteMessage, setQuoteMessage] = useState('Standard local delivery');
+  const [street, setStreet] = useState(userProfile.addresses[0]?.street || '');
+  const [suburb, setSuburb] = useState(userProfile.addresses[0]?.suburb || '');
+  const [state, setState] = useState(userProfile.addresses[0]?.state || 'NSW');
+  const [postcode, setPostcode] = useState(userProfile.addresses[0]?.postcode || '');
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<PaymentMethodType>('stripe_card');
@@ -59,12 +67,33 @@ export const CheckoutModal: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingStage, setProcessingStage] = useState('');
 
-  if (activeModal !== 'checkout') return null;
-
   const activeAddress =
     userProfile.addresses.find((a) => a.id === selectedAddressId) || userProfile.addresses[0];
 
-  const installmentAmount = (cartTotal / 4).toFixed(2);
+  const checkoutTotal = Number((cartSubtotal + deliveryFee + cartServiceFee + driverTip).toFixed(2));
+  const installmentAmount = (checkoutTotal / 4).toFixed(2);
+
+  useEffect(() => {
+    if (fulfillmentType === 'pickup') {
+      setDeliveryFee(0);
+      setQuoteMessage('Free in-store pickup');
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      getShippingQuote(suburb, postcode, cartSubtotal)
+        .then((quote) => {
+          setDeliveryFee(quote.fee);
+          setQuoteMessage(quote.message);
+        })
+        .catch(() => {
+          setDeliveryFee(cartSubtotal >= 100 ? 0 : 10);
+          setQuoteMessage('Standard local delivery');
+        });
+    }, 250);
+    return () => window.clearTimeout(timer);
+  }, [fulfillmentType, suburb, postcode, cartSubtotal]);
+
+  if (activeModal !== 'checkout') return null;
 
   const handleProcessPayment = () => {
     setIsProcessing(true);
@@ -126,16 +155,18 @@ export const CheckoutModal: React.FC = () => {
 
         createOrder({
           payment: paymentRecord,
+          fulfillmentType,
+          deliveryFee,
           addressId: selectedAddressId,
           customAddress: {
-            street: activeAddress.street,
-            unitNumber: activeAddress.unitNumber,
-            suburb: activeAddress.suburb,
-            state: activeAddress.state,
-            postcode: activeAddress.postcode,
+            street: fulfillmentType === 'pickup' ? '240 George Street' : street,
+            unitNumber: fulfillmentType === 'pickup' ? undefined : activeAddress.unitNumber,
+            suburb: fulfillmentType === 'pickup' ? 'Sydney CBD' : suburb,
+            state: fulfillmentType === 'pickup' ? 'NSW' : state,
+            postcode: fulfillmentType === 'pickup' ? '2000' : postcode,
             deliveryInstructions: deliveryNotes || activeAddress.deliveryInstructions,
-            lat: activeAddress.lat,
-            lng: activeAddress.lng,
+            lat: fulfillmentType === 'pickup' ? -33.865 : activeAddress.lat,
+            lng: fulfillmentType === 'pickup' ? 151.205 : activeAddress.lng,
           },
         });
       }, 1200);
@@ -157,7 +188,7 @@ export const CheckoutModal: React.FC = () => {
             <div>
               <h2 className="text-base font-bold text-stone-900">Encrypted 256-bit Checkout</h2>
               <p className="text-xs text-stone-500">
-                Total to pay: <strong className="text-stone-900 font-mono">${cartTotal.toFixed(2)} AUD</strong>
+                Total to pay: <strong className="text-stone-900 font-mono">${checkoutTotal.toFixed(2)} AUD</strong>
               </p>
             </div>
           </div>
@@ -178,10 +209,37 @@ export const CheckoutModal: React.FC = () => {
           <div className="space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-emerald-700" />
-              <span>1. Delivery Destination & Timing</span>
+              <span>1. Fulfillment & Destination</span>
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
+              <button id="btn-fulfillment-delivery" onClick={() => setFulfillmentType('delivery')} className={`p-3 rounded-xl border text-left ${fulfillmentType === 'delivery' ? 'bg-emerald-50 border-emerald-600' : 'bg-white border-stone-200'}`}>
+                <strong className="block text-xs text-stone-900">Local Express Delivery</strong>
+                <span className="text-[10px] text-stone-500">To an Australian address</span>
+              </button>
+              <button id="btn-fulfillment-pickup" onClick={() => setFulfillmentType('pickup')} className={`p-3 rounded-xl border text-left ${fulfillmentType === 'pickup' ? 'bg-emerald-50 border-emerald-600' : 'bg-white border-stone-200'}`}>
+                <strong className="block text-xs text-stone-900">In-Store Pickup</strong>
+                <span className="text-[10px] text-stone-500">No delivery fee</span>
+              </button>
+            </div>
+
+            {fulfillmentType === 'pickup' ? (
+              <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl">
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-950"><Building className="w-4 h-4" /> Three Boys Mart Sydney CBD</div>
+                <p className="text-xs text-amber-900 mt-1">240 George Street, Sydney NSW 2000</p>
+                <p className="text-[11px] text-amber-800 mt-1">Open daily, 8:00 AM - 8:00 PM. Pickup is free.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label className="text-[11px] font-bold text-stone-700 sm:col-span-2">Street<input value={street} onChange={(e) => setStreet(e.target.value)} required className="mt-1 w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs font-normal" /></label>
+                <label className="text-[11px] font-bold text-stone-700">Suburb<input value={suburb} onChange={(e) => setSuburb(e.target.value)} required className="mt-1 w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs font-normal" /></label>
+                <label className="text-[11px] font-bold text-stone-700">State<select value={state} onChange={(e) => setState(e.target.value)} className="mt-1 w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs font-normal"><option>NSW</option><option>VIC</option><option>QLD</option><option>WA</option><option>SA</option><option>TAS</option><option>ACT</option></select></label>
+                <label className="text-[11px] font-bold text-stone-700">Postcode<input value={postcode} onChange={(e) => setPostcode(e.target.value)} required pattern="[0-9]{4}" inputMode="numeric" className="mt-1 w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs font-normal" /></label>
+                <p className="text-[11px] text-emerald-800 sm:col-span-2">{quoteMessage}: <strong>${deliveryFee.toFixed(2)} AUD</strong></p>
+              </div>
+            )}
+
+            {fulfillmentType === 'delivery' && <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {userProfile.addresses.map((addr) => (
                 <button
                   key={addr.id}
@@ -208,7 +266,7 @@ export const CheckoutModal: React.FC = () => {
                   </p>
                 </button>
               ))}
-            </div>
+            </div>}
 
             {/* Time slot selector */}
             <div className="grid grid-cols-3 gap-2 text-xs">
@@ -456,7 +514,7 @@ export const CheckoutModal: React.FC = () => {
                   </div>
                   <h4 className="text-xs font-bold text-stone-900">PayPal Express Checkout</h4>
                   <p className="text-xs text-stone-500 max-w-sm mx-auto">
-                    You will authenticate via PayPal's secure modal to authorize ${cartTotal.toFixed(2)} AUD using your PayPal balance or linked bank account.
+                    You will authenticate via PayPal's secure modal to authorize ${checkoutTotal.toFixed(2)} AUD using your PayPal balance or linked bank account.
                   </p>
                 </div>
               )}
@@ -474,7 +532,7 @@ export const CheckoutModal: React.FC = () => {
                     <div>
                       <span className="text-[10px] text-stone-400 block">Merchant PayID Handle:</span>
                       <strong className="text-xs font-mono text-stone-900">
-                        orders@freshmarket.com.au
+                        orders@threeboysmart.com.au
                       </strong>
                     </div>
                     <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded">
@@ -572,7 +630,7 @@ export const CheckoutModal: React.FC = () => {
             <div className="text-left w-full sm:w-auto">
               <span className="text-[11px] text-stone-500 block">Authorized Amount:</span>
               <span className="text-xl font-black text-stone-900 font-mono">
-                ${cartTotal.toFixed(2)} AUD
+                ${checkoutTotal.toFixed(2)} AUD
               </span>
             </div>
 
@@ -583,8 +641,8 @@ export const CheckoutModal: React.FC = () => {
               className="w-full sm:w-auto bg-emerald-700 hover:bg-emerald-800 disabled:bg-stone-300 text-white py-3.5 px-8 rounded-2xl text-sm font-bold transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Lock className="w-4 h-4" />
-              <span>
-                Pay ${cartTotal.toFixed(2)} AUD Now
+                <span>
+                Pay ${checkoutTotal.toFixed(2)} AUD Now
               </span>
               <ArrowRight className="w-4 h-4" />
             </button>

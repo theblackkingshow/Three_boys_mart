@@ -68,11 +68,11 @@ export const Footer: React.FC = () => {
                 <ShoppingBag className="w-4 h-4" />
               </div>
               <span className="text-xl font-black text-white font-serif tracking-tight">
-                FreshMarket<span className="text-emerald-500">.</span>
+                Three Boys Mart<span className="text-emerald-500">.</span>
               </span>
             </div>
             <p className="text-xs text-stone-400 leading-relaxed max-w-sm">
-              Australia's premier multi-vendor supermarket and artisan grocery platform. Sourcing farm-fresh produce, meats, bakery goods, and pantry staples directly to your doorstep with real-time GPS tracking.
+              A considered Australian marketplace for food, style, beauty, home, gifts and everyday discoveries, delivered to your doorstep.
             </p>
             <div className="flex flex-wrap gap-2 pt-2">
               <span className="text-[11px] bg-stone-800 text-stone-300 px-2.5 py-1 rounded-md border border-stone-700">
@@ -87,16 +87,16 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Grocery Categories */}
+          {/* Marketplace Departments */}
           <div>
-            <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">Popular Aisles</h5>
+            <h5 className="text-xs font-bold text-white uppercase tracking-wider mb-3">Popular Departments</h5>
             <ul className="space-y-2 text-xs text-stone-400">
               <li className="hover:text-emerald-400 transition-colors">Fresh Produce & Herbs</li>
-              <li className="hover:text-emerald-400 transition-colors">Dairy, Milk & Free-Range Eggs</li>
-              <li className="hover:text-emerald-400 transition-colors">Woodfire Sourdough & Bakery</li>
-              <li className="hover:text-emerald-400 transition-colors">Tasmanian Salmon & Prime Meats</li>
-              <li className="hover:text-emerald-400 transition-colors">Organic & Gluten-Free Pantry</li>
-              <li className="hover:text-emerald-400 transition-colors">Cold-Pressed Juices & Brews</li>
+              <li className="hover:text-emerald-400 transition-colors">Pantry, Bakery & Kitchen</li>
+              <li className="hover:text-emerald-400 transition-colors">Fashion & Personal Care</li>
+              <li className="hover:text-emerald-400 transition-colors">Home, Gifts & Crafts</li>
+              <li className="hover:text-emerald-400 transition-colors">Games & Creative Play</li>
+              <li className="hover:text-emerald-400 transition-colors">Local Seller Collections</li>
             </ul>
           </div>
 
@@ -129,7 +129,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright */}
         <div className="pt-6 border-t border-stone-800 text-xs text-stone-500 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 FreshMarket Hub Australia Pty Ltd. All rights reserved. ABN 84 920 184 722.</p>
+          <p>© 2026 Three Boys Mart Australia Pty Ltd. All rights reserved. ABN 84 920 184 722.</p>
           <div className="flex items-center gap-4">
             <span className="hover:text-stone-300 transition-colors">Privacy Policy</span>
             <span>•</span>

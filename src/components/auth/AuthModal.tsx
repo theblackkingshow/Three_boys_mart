@@ -301,7 +301,7 @@ export const AuthModal: React.FC = () => {
 
         {/* Modal Footer */}
         <div className="p-4 bg-stone-50 border-t border-stone-200 text-center text-xs text-stone-500">
-          FreshMarket Secure Role-Based Access Control • Australian Multi-Vendor Platform
+          Three Boys Mart Secure Role-Based Access Control • Australian Marketplace
         </div>
       </div>
     </div>

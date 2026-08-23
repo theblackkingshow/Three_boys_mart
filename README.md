@@ -1,4 +1,4 @@
-# FreshMarket
+# Three Boys Mart
 
 A local React and Vite demo for a multi-vendor food and grocery delivery platform.
 
