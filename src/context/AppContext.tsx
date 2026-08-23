@@ -27,7 +27,7 @@ import {
   updateProductDynamicPrices,
   calculateDynamicPrice,
 } from '../services/dynamicPricing';
-import { loadCatalogProducts, uploadProductAndInsert } from '../services/catalogApi';
+import { loadCatalogProducts, uploadProductAndInsert, uploadProductImage, updateProductRecord } from '../services/catalogApi';
 
 interface AppContextType {
   // Role & Current User
@@ -50,6 +50,7 @@ interface AppContextType {
   updatePricingConfig: (config: Partial<DynamicPricingConfig>) => void;
   updateProductStock: (productId: string, newStock: number) => void;
   updateProductBasePrice: (productId: string, newBasePrice: number) => void;
+  updateProductImage: (productId: string, imageFile: File) => Promise<void>;
   addNewProduct: (product: Omit<Product, 'id' | 'currentPrice'>, imageFile?: File) => Promise<void>;
 
   // Search & Filtering
@@ -278,6 +279,22 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         return p;
       })
     );
+  };
+
+  const updateProductImage = async (productId: string, imageFile: File) => {
+    try {
+      const image = await uploadProductImage(imageFile);
+      if (image) {
+        const savedProduct = await updateProductRecord(productId, { image });
+        setProducts((prev) => prev.map((product) => product.id === productId ? { ...product, image: savedProduct?.image || image } : product));
+      } else {
+        const localImage = URL.createObjectURL(imageFile);
+        setProducts((prev) => prev.map((product) => product.id === productId ? { ...product, image: localImage } : product));
+      }
+      showToast('Product image updated', 'success');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Product image could not be updated', 'warning');
+    }
   };
 
   const addNewProduct = async (rawProduct: Omit<Product, 'id' | 'currentPrice'>, imageFile?: File) => {
@@ -802,6 +819,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         updatePricingConfig,
         updateProductStock,
         updateProductBasePrice,
+        updateProductImage,
         addNewProduct,
         selectedSector,
         setSelectedSector,

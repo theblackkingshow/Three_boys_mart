@@ -34,3 +34,25 @@ export const uploadProductAndInsert = async (
   if (!response.ok) throw new Error(`Product insert failed (${response.status})`);
   return response.json();
 };
+
+export const uploadProductImage = async (imageFile: File): Promise<string | null> => {
+  if (!apiBaseUrl) return null;
+  const response = await fetch(`${apiBaseUrl}/api/uploads/product-image`, {
+    method: 'POST',
+    headers: { 'Content-Type': imageFile.type, 'X-File-Name': imageFile.name },
+    body: imageFile,
+  });
+  if (!response.ok) throw new Error(`Image upload failed (${response.status})`);
+  return (await response.json()).url;
+};
+
+export const updateProductRecord = async (productId: string, changes: Partial<Product>): Promise<Product | null> => {
+  if (!apiBaseUrl) return null;
+  const response = await fetch(`${apiBaseUrl}/api/products/${productId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(changes),
+  });
+  if (!response.ok) throw new Error(`Product update failed (${response.status})`);
+  return response.json();
+};

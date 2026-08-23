@@ -68,6 +68,21 @@ app.post('/api/products', async (req, res) => {
   }
 });
 
+app.patch('/api/products/:id', async (req, res) => {
+  if (!supabaseUrl || !supabaseServiceRoleKey) return res.status(503).json({ error: 'Catalog database is not configured' });
+  try {
+    const response = await fetch(`${supabaseUrl}/rest/v1/products?id=eq.${encodeURIComponent(req.params.id)}`, {
+      method: 'PATCH',
+      headers: { ...supabaseHeaders(), Prefer: 'return=representation' },
+      body: JSON.stringify(req.body),
+    });
+    const payload = await response.json();
+    res.status(response.status).json(Array.isArray(payload) ? payload[0] : payload);
+  } catch (error) {
+    res.status(502).json({ error: error instanceof Error ? error.message : 'Product update failed' });
+  }
+});
+
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/health', (_req, res) => {

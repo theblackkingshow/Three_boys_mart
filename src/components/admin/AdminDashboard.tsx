@@ -17,9 +17,12 @@ import {
   CreditCard,
   Layers,
   Sparkles,
+  Plus,
+  X,
+  ImagePlus,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { OrderStatus, PaymentMethodType } from '../../types';
+import { GroceryCategory, OrderStatus, PaymentMethodType } from '../../types';
 
 export const AdminDashboard: React.FC = () => {
   const {
@@ -32,13 +35,24 @@ export const AdminDashboard: React.FC = () => {
     updateOrderStatus,
     assignDriverToOrder,
     cancelOrder,
+    updateProductStock,
+    updateProductBasePrice,
+    updateProductImage,
+    addNewProduct,
     showToast,
   } = useApp();
 
   const [activeAdminTab, setActiveAdminTab] = useState<
-    'orders' | 'fleet' | 'pricing_engine' | 'vendors' | 'payments'
+    'orders' | 'catalog' | 'fleet' | 'pricing_engine' | 'vendors' | 'payments'
   >('orders');
   const [orderSearch, setOrderSearch] = useState('');
+  const [productSearch, setProductSearch] = useState('');
+  const [isAddProductOpen, setIsAddProductOpen] = useState(false);
+  const [newProductName, setNewProductName] = useState('');
+  const [newProductPrice, setNewProductPrice] = useState(5);
+  const [newProductStock, setNewProductStock] = useState(20);
+  const [newProductCategory, setNewProductCategory] = useState<GroceryCategory>('Fresh Produce');
+  const [newProductImage, setNewProductImage] = useState<File | undefined>();
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('all');
 
   // Dynamic pricing rule draft state
@@ -63,6 +77,39 @@ export const AdminDashboard: React.FC = () => {
     const matchStatus = selectedStatusFilter === 'all' || o.status === selectedStatusFilter;
     return matchQuery && matchStatus;
   });
+
+  const filteredCatalog = products.filter((product) =>
+    `${product.name} ${product.category} ${product.vendorName}`
+      .toLowerCase()
+      .includes(productSearch.toLowerCase())
+  );
+
+  const handleAddProduct = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const vendor = vendors[0];
+    if (!newProductName.trim() || !vendor) return;
+    await addNewProduct({
+      vendorId: vendor.id,
+      vendorName: vendor.name,
+      name: newProductName.trim(),
+      category: newProductCategory,
+      itemType: 'grocery',
+      description: `Premium quality ${newProductName.trim()} supplied by ${vendor.name}.`,
+      basePrice: Number(newProductPrice),
+      stock: Number(newProductStock),
+      initialStock: Number(newProductStock),
+      lowStockThreshold: 6,
+      surplusThreshold: 35,
+      dietary: [],
+      origin: 'Australia',
+      brand: 'FreshMarket',
+      unit: 'each',
+      image: newProductImage ? URL.createObjectURL(newProductImage) : '',
+    }, newProductImage);
+    setNewProductName('');
+    setNewProductImage(undefined);
+    setIsAddProductOpen(false);
+  };
 
   const handleSavePricingConfig = () => {
     updatePricingConfig({
@@ -173,6 +220,19 @@ export const AdminDashboard: React.FC = () => {
         >
           <TrendingDown className="w-3.5 h-3.5" />
           <span>Dynamic Pricing Rules</span>
+        </button>
+
+        <button
+          id="btn-admin-tab-catalog"
+          onClick={() => setActiveAdminTab('catalog')}
+          className={`px-4 py-2 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            activeAdminTab === 'catalog'
+              ? 'bg-purple-700 text-white shadow-xs'
+              : 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-50'
+          }`}
+        >
+          <Layers className="w-3.5 h-3.5" />
+          <span>Product Catalog ({products.length})</span>
         </button>
 
         <button
@@ -472,10 +532,11 @@ export const AdminDashboard: React.FC = () => {
       )}
 
       {/* Tab 3: Driver Fleet Directory */}
-      {activeAdminTab === 'fleet' && (
+      {(activeAdminTab === 'fleet' || activeAdminTab === 'catalog') && (
         <div className="bg-white rounded-3xl border border-stone-200 p-5 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-stone-900">Courier Fleet Telemetry & Status</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className={activeAdminTab === 'catalog' ? 'hidden' : ''}>
+            <h3 className="text-sm font-bold text-stone-900">Courier Fleet Telemetry & Status</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {drivers.map((d) => (
               <div
                 key={d.id}
@@ -526,7 +587,151 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
             ))}
+
+            </div>
           </div>
+
+          {/* Product Catalog Management */}
+          {activeAdminTab === 'catalog' && (
+              <div className="bg-white rounded-3xl border border-stone-200 p-5 shadow-xs space-y-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-sm font-bold text-stone-900">Product Catalog Management</h3>
+                    <p className="text-xs text-stone-500 mt-1">Update live inventory and base prices across every store.</p>
+                  </div>
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                  <button
+                    id="btn-admin-add-product"
+                    type="button"
+                    onClick={() => setIsAddProductOpen(true)}
+                    className="inline-flex items-center justify-center gap-1.5 bg-purple-700 hover:bg-purple-800 text-white px-3 py-2 rounded-xl text-xs font-bold"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> Add Product
+                  </button>
+                  <div className="relative w-full sm:w-72">
+                    <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      id="input-admin-search-products"
+                      type="search"
+                      value={productSearch}
+                      onChange={(e) => setProductSearch(e.target.value)}
+                      placeholder="Search products, stores, categories..."
+                      className="w-full pl-8 pr-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-600/30"
+                    />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs min-w-[760px]">
+                    <thead>
+                      <tr className="border-b border-stone-200 text-stone-400 uppercase font-semibold text-[10px]">
+                        <th className="pb-2.5">Product</th>
+                        <th className="pb-2.5">Store</th>
+                        <th className="pb-2.5">Category</th>
+                        <th className="pb-2.5">Base Price</th>
+                        <th className="pb-2.5">Stock</th>
+                        <th className="pb-2.5">Current Price</th>
+                        <th className="pb-2.5 text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-stone-100">
+                      {filteredCatalog.map((product) => (
+                        <tr key={product.id} className="hover:bg-stone-50/70">
+                          <td className="py-3 pr-3">
+                            <div className="flex items-center gap-2.5">
+                              <div className="relative shrink-0">
+                                <img src={product.image} alt={product.name} className="w-10 h-10 rounded-lg object-cover" />
+                                <label htmlFor={`product-image-${product.id}`} className="absolute -right-1 -bottom-1 bg-white rounded-full p-1 shadow border border-stone-200 cursor-pointer" title="Replace product image">
+                                  <ImagePlus className="w-3 h-3 text-purple-700" />
+                                </label>
+                                <input
+                                  id={`product-image-${product.id}`}
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(event) => {
+                                    const file = event.target.files?.[0];
+                                    if (file) void updateProductImage(product.id, file);
+                                  }}
+                                />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 max-w-[220px] truncate">{product.name}</div>
+                                <div className="text-[10px] text-stone-500">{product.unit}</div>
+
+                          {isAddProductOpen && (
+                            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60">
+                              <form onSubmit={handleAddProduct} className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 space-y-4">
+                                <div className="flex items-center justify-between">
+                                  <h3 className="text-base font-bold text-stone-900">Add Product</h3>
+                                  <button type="button" onClick={() => setIsAddProductOpen(false)} aria-label="Close add product form"><X className="w-5 h-5 text-stone-500" /></button>
+                                </div>
+                                <input required value={newProductName} onChange={(event) => setNewProductName(event.target.value)} placeholder="Product name" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-sm" />
+                                <div className="grid grid-cols-2 gap-3">
+                                  <select value={newProductCategory} onChange={(event) => setNewProductCategory(event.target.value as GroceryCategory)} className="bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-sm">
+                                    <option>Fresh Produce</option><option>Dairy & Eggs</option><option>Bakery & Bread</option><option>Meat & Seafood</option><option>Pantry & Staples</option><option>Beverages & Juices</option>
+                                  </select>
+                                  <input type="number" min="0" step="0.01" value={newProductPrice} onChange={(event) => setNewProductPrice(Number(event.target.value))} aria-label="Base price" className="bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-sm" />
+                                </div>
+                                <input type="number" min="0" step="1" value={newProductStock} onChange={(event) => setNewProductStock(Number(event.target.value))} aria-label="Initial stock" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-sm" />
+                                <label className="block text-xs font-bold text-stone-700">Product image<input type="file" id="product-image" accept="image/*" onChange={(event) => setNewProductImage(event.target.files?.[0])} className="mt-1 w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2" /></label>
+                                <button type="submit" className="w-full bg-purple-700 hover:bg-purple-800 text-white rounded-xl py-2.5 text-sm font-bold">Save Product</button>
+                              </form>
+                            </div>
+                          )}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 pr-3 text-stone-700 max-w-[150px]">{product.vendorName}</td>
+                          <td className="py-3 pr-3 text-stone-500">{product.category}</td>
+                          <td className="py-3 pr-3">
+                            <input
+                              aria-label={`Base price for ${product.name}`}
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              defaultValue={product.basePrice}
+                              onBlur={(e) => {
+                                const value = Number(e.target.value);
+                                if (Number.isFinite(value) && value >= 0 && value !== product.basePrice) {
+                                  updateProductBasePrice(product.id, value);
+                                  showToast(`${product.name} price updated`, 'success');
+                                }
+                              }}
+                              className="w-24 bg-stone-50 border border-stone-200 rounded-lg px-2 py-1.5 font-mono text-xs"
+                            />
+                          </td>
+                          <td className="py-3 pr-3">
+                            <input
+                              aria-label={`Stock for ${product.name}`}
+                              type="number"
+                              min="0"
+                              step="1"
+                              defaultValue={product.stock}
+                              onBlur={(e) => {
+                                const value = Number(e.target.value);
+                                if (Number.isInteger(value) && value >= 0 && value !== product.stock) {
+                                  updateProductStock(product.id, value);
+                                }
+                              }}
+                              className="w-20 bg-stone-50 border border-stone-200 rounded-lg px-2 py-1.5 font-mono text-xs"
+                            />
+                          </td>
+                          <td className="py-3 pr-3 font-black text-stone-900">${product.currentPrice.toFixed(2)}</td>
+                          <td className="py-3 text-right">
+                            <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${product.stock <= 0 ? 'bg-rose-100 text-rose-700' : product.stock > 35 ? 'bg-emerald-100 text-emerald-700' : 'bg-stone-100 text-stone-600'}`}>
+                              {product.stock <= 0 ? 'Out of stock' : product.stock > 35 ? 'Surplus' : 'In stock'}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {filteredCatalog.length === 0 && <p className="text-center text-sm text-stone-500 py-10">No products match your search.</p>}
+                </div>
+              </div>
+          )}
         </div>
       )}
 
