@@ -106,9 +106,28 @@ app.delete('/api/products/:id', async (req, res) => {
   try {
     const response = await fetch(`${supabaseUrl}/rest/v1/products?id=eq.${encodeURIComponent(req.params.id)}`, {
       method: 'DELETE',
-      headers: { ...supabaseHeaders(), Prefer: 'return=minimal' },
+      // `return=minimal` cannot distinguish a deleted row from an unmatched id.
+      headers: { ...supabaseHeaders(), Prefer: 'return=representation' },
     });
-    res.sendStatus(response.status);
+    const responseText = await response.text();
+    let payload;
+    try {
+      payload = responseText ? JSON.parse(responseText) : null;
+    } catch {
+      payload = responseText;
+    }
+
+    if (!response.ok) {
+      return res.status(response.status).json({
+        error: typeof payload === 'object' && payload?.message ? payload.message : 'Product deletion failed',
+      });
+    }
+
+    if (!Array.isArray(payload) || payload.length === 0) {
+      return res.status(404).json({ error: 'Product was not found or has already been deleted' });
+    }
+
+    return res.status(200).json({ deleted: true, id: payload[0].id });
   } catch (error) {
     res.status(502).json({ error: error instanceof Error ? error.message : 'Product deletion failed' });
   }

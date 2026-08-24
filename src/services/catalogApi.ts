@@ -60,5 +60,9 @@ export const updateProductRecord = async (productId: string, changes: Partial<Pr
 export const deleteProductRecord = async (productId: string): Promise<void> => {
   if (!apiBaseUrl) throw new Error('Catalog API is not configured; product deletion cannot be persisted');
   const response = await fetch(`${apiBaseUrl}/api/products/${productId}`, { method: 'DELETE' });
-  if (!response.ok) throw new Error(`Product deletion failed (${response.status})`);
+  if (!response.ok) {
+    const payload = await response.json().catch(() => null);
+    const message = payload && typeof payload.error === 'string' ? payload.error : `Product deletion failed (${response.status})`;
+    throw new Error(message);
+  }
 };
