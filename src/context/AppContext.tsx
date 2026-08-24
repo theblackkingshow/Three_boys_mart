@@ -308,9 +308,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const product = products.find((item) => item.id === productId);
     if (!product) return;
     try {
-      await deleteProductRecord(productId);
+      const wasPersisted = await deleteProductRecord(productId);
       setProducts((prev) => prev.filter((item) => item.id !== productId));
-      showToast(`${product.name} deleted from catalog`, 'success');
+      showToast(wasPersisted ? `${product.name} deleted from catalog` : `${product.name} deleted for this session`, wasPersisted ? 'success' : 'info');
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Product could not be deleted', 'warning');
     }
