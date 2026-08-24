@@ -2,13 +2,19 @@ services:
   - type: web
     name: fresh-groceries-api
     runtime: node
-    buildCommand: npm install
+    buildCommand: npm install && npm run build
     startCommand: npm start
     healthCheckPath: /health
     envVars:
+      - key: VITE_USE_SAME_ORIGIN_API
+        value: "true"
       - key: FRONTEND_ORIGIN
         sync: false
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
+      - key: COURIER_PROVIDER
+        value: Perth Connect Delivery
+      - key: SENDER_POSTCODE
+        value: "6000"

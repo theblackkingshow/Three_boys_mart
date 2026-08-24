@@ -1,5 +1,5 @@
 const runtimeEnv = (import.meta as ImportMeta & { env: Record<string, string | undefined> }).env;
-const apiBaseUrl = (runtimeEnv.VITE_API_URL || '').replace(/\/$/, '');
+const apiBaseUrl = (runtimeEnv.VITE_API_URL || (runtimeEnv.VITE_USE_SAME_ORIGIN_API === 'true' ? globalThis.location.origin : '')).replace(/\/$/, '');
 
 export interface ShippingQuote {
   fee: number;

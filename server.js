@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 const PORT = Number(process.env.PORT) || 3000;
 const frontendOrigin = process.env.FRONTEND_ORIGIN || '*';
 const supabaseUrl = process.env.SUPABASE_URL;
+const courierProvider = process.env.COURIER_PROVIDER?.trim();
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 app.use((req, res, next) => {
@@ -25,8 +26,8 @@ app.post('/api/shipping/quote', (req, res) => {
   const fee = subtotal >= 100 ? 0 : 10;
   res.json({
     fee,
-    provider: process.env.COURIER_PROVIDER ? 'courier_ready' : 'flat_rate',
-    message: fee === 0 ? 'Free local delivery' : 'Standard local delivery',
+    provider: courierProvider ? 'courier_ready' : 'flat_rate',
+    message: courierProvider ? `${courierProvider}: ${fee === 0 ? 'free local delivery' : 'standard local delivery'}` : (fee === 0 ? 'Free local delivery' : 'Standard local delivery'),
     courierReady: { senderPostcode: process.env.SENDER_POSTCODE || '2000', recipientPostcode: String(req.body?.postcode || '') },
   });
 });
